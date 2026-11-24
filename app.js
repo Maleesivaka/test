@@ -61,77 +61,17 @@ function showView(viewId) {
   for (var i = 0; i < panels.length; i++) panels[i].classList.remove('active');
   var target = document.getElementById(viewId);
   if (target) target.classList.add('active');
-  Array.prototype.forEach.call(document.querySelectorAll('#mainNav a'), function (a) {
-    a.classList.toggle('on', a.getAttribute('data-v') === viewId);
+  Array.prototype.forEach.call(document.querySelectorAll('.rail-btn'), function (b) {
+    b.classList.toggle('active', b.getAttribute('data-v') === viewId);
   });
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function jumpAdminSection(secId) {
   var el = document.getElementById(secId);
-  if (el) {
-    var y = el.getBoundingClientRect().top + window.scrollY - 110;
-    window.scrollTo({ top: y, behavior: 'smooth' });
-  }
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-/* SUBTLE GOLD PARTICLES IN HERO HEADER */
-function initGoldParticles() {
-  var canvas = document.getElementById('goldParticles');
-  if (!canvas) return;
-  var ctx = canvas.getContext('2d');
-  var particles = [];
-  function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
-  resize();
-  window.addEventListener('resize', resize);
-  for (var i = 0; i < 28; i++) {
-    particles.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      r: 1 + Math.random() * 2.2,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: -0.15 - Math.random() * 0.35,
-      a: 0.25 + Math.random() * 0.65
-    });
-  }
-  function tick() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(function (p) {
-      p.x += p.vx; p.y += p.vy;
-      if (p.y < 0) p.y = canvas.height;
-      if (p.x < 0) p.x = canvas.width;
-      if (p.x > canvas.width) p.x = 0;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(253, 184, 39, ' + p.a + ')';
-      ctx.fill();
-    });
-    requestAnimationFrame(tick);
-  }
-  tick();
-}
-
-/* LIVE COUNTDOWN TO NEXT SCHEDULED ITEM */
-function updateFestCountdown() {
-  var el = document.getElementById('festCountdown');
-  if (!el) return;
-  var now = new Date();
-  var upcoming = (festSchedule || []).map(function (s) {
-    return { s: s, dt: s.date && s.time ? new Date(s.date + 'T' + s.time) : null };
-  }).filter(function (x) { return x.dt && !isNaN(x.dt) && x.dt > now; }).sort(function (a, b) { return a.dt - b.dt; });
-
-  if (upcoming.length > 0) {
-    var diff = Math.floor((upcoming[0].dt - now) / 1000);
-    var hrs = Math.floor(diff / 3600);
-    var mins = Math.floor((diff % 3600) / 60);
-    var secs = diff % 60;
-    el.textContent = 'NEXT: ' + upcoming[0].s.program.toUpperCase() + ' IN ' + String(hrs).padStart(2, '0') + 'H ' + String(mins).padStart(2, '0') + 'M ' + String(secs).padStart(2, '0') + 'S';
-  } else {
-    el.textContent = 'CAMPUS ARTS FEST 2K26';
-  }
-}
-
-/* GLOBAL SEARCH */
 function runGlobalSearch(q) {
   var box = document.getElementById('globalSearchResults');
   if (!box) return;
@@ -152,18 +92,17 @@ function runGlobalSearch(q) {
     box.innerHTML = '<div class="gs-item"><span class="muted-text">No matches found</span></div>';
   } else {
     box.innerHTML = hits.slice(0, 8).map(function (h) {
-      return '<div class="gs-item" onclick="showView('' + h.view + '');document.getElementById('globalSearchResults').style.display='none'"><b>' + esc(h.label) + '</b><span class="badge" style="background:rgba(253,184,39,0.15);color:#FDB827;">' + esc(h.tag) + '</span></div>';
+      return '<div class="gs-item" onclick="showView('' + h.view + '');document.getElementById('globalSearchResults').style.display='none'"><b>' + esc(h.label) + '</b><span class="badge" style="background:#FEF2F2;color:#F34B4B;">' + esc(h.tag) + '</span></div>';
     }).join('');
   }
   box.style.display = 'block';
 }
 document.addEventListener('click', function (e) {
   var box = document.getElementById('globalSearchResults');
-  if (box && !e.target.closest('.global-search-box')) box.style.display = 'none';
+  if (box && !e.target.closest('.topbar-search-wrap')) box.style.display = 'none';
 });
 
 window.onload = function () {
-  initGoldParticles();
   fetchCloudData();
   initCandidateRows();
   updateJudgeProgramDropdown();
@@ -171,9 +110,6 @@ window.onload = function () {
   setInterval(fetchCloudData, 20000);
   setInterval(rotateQuote, 8000);
   setInterval(rotateAnnouncedResult, 5000);
-  setInterval(updateFestCountdown, 1000);
-  var first = document.querySelector('#mainNav a[data-v="dashboardView"]');
-  if (first) first.classList.add('on');
 };
 
 function fetchCloudData() {
@@ -238,7 +174,6 @@ function updateDashboardOverviews() {
   var setTxt = function (id, val) { var el = document.getElementById(id); if (el) el.textContent = val; };
   setTxt('pubStatPrograms', festPrograms.length);
   setTxt('pubStatCandidates', festCandidates.length);
-  setTxt('pubStatEntries', totalEntries);
   setTxt('pubStatPublished', pubCount);
 
   setTxt('admStatPrograms', festPrograms.length);
@@ -246,27 +181,24 @@ function updateDashboardOverviews() {
   setTxt('admStatEntries', totalEntries);
   setTxt('admStatPending', pendingCount);
 
-  // Pending tasks in Fest Control
   var pBox = document.getElementById('adminPendingTasks');
   if (pBox) {
     var drafts = {};
     festResults.forEach(function (r) { if (r.published === 'NO' && r.regNo !== '-') drafts[r.category + '|' + r.program] = 1; });
-    var draftCount = Object.keys(drafts).length;
     pBox.innerHTML =
       '<div style="font-size:12.5px;line-height:1.8;">' +
       '<div>• <b>' + pendingCount + '</b> program(s) awaiting result entry</div>' +
-      '<div>• <b>' + draftCount + '</b> confidential draft result(s) awaiting publication</div>' +
-      '<div>• <b>' + festSchedule.length + '</b> stage schedule slot(s) configured</div>' +
+      '<div>• <b>' + Object.keys(drafts).length + '</b> draft result(s) awaiting publish</div>' +
+      '<div>• <b>' + festSchedule.length + '</b> schedule slot(s) listed</div>' +
       '</div>';
   }
 
-  // Recent admin logs
   var lBox = document.getElementById('adminRecentLogs');
   if (lBox) {
     lBox.innerHTML = adminLogs.length === 0
-      ? '<p class="muted-text">No recent actions logged in this session.</p>'
+      ? '<p class="muted-text">No recent admin actions in this session.</p>'
       : adminLogs.slice(0, 5).map(function (l) {
-          return '<div style="font-size:12px;padding:4px 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--orange-action);font-weight:700;">' + l.time + '</span> — ' + esc(l.text) + '</div>';
+          return '<div style="font-size:12px;padding:4px 0;border-bottom:1px solid var(--border);"><b style="color:#F34B4B;">' + l.time + '</b> — ' + esc(l.text) + '</div>';
         }).join('');
   }
 }
@@ -278,7 +210,6 @@ function refreshAll() {
   });
 }
 
-/* 1. PROGRAMS */
 function toggleCategorySelect() {
   var type = document.getElementById('progType').value;
   var wrap = document.getElementById('progCatWrapper');
@@ -292,11 +223,10 @@ function addMoreProgramRow() {
   var div = document.createElement('div');
   div.className = 'program-input-row';
   div.style.cssText = 'display:flex; gap:8px; margin-bottom:8px;';
-  div.innerHTML = '<input type="text" class="prog-name-input" placeholder="Enter Program Name"><button type="button" onclick="this.parentElement.remove()" class="btn-danger-sm"><i class="fa-solid fa-trash"></i></button>';
+  div.innerHTML = '<input type="text" class="prog-name-input" placeholder="Program name"><button type="button" onclick="this.parentElement.remove()" class="btn-danger-sm"><i class="fa-solid fa-trash"></i></button>';
   container.appendChild(div);
 }
 
-/* 2. CANDIDATES */
 function getTeamCode(t) { return t === "Qahira" ? "A" : t === "Qudsiya" ? "B" : t === "Qurthuba" ? "C" : "A"; }
 function getCategoryCode(c) { return c === "SENIOR" ? "S" : c === "JUNIOR" ? "J" : c === "SUB-JUNIOR" ? "SJ" : "S"; }
 
@@ -316,7 +246,7 @@ function addCandidateRow() {
   var div = document.createElement('div');
   div.className = 'cand-multi-row';
   div.style.cssText = 'display:flex; gap:10px; margin-bottom:8px; align-items:center;';
-  div.innerHTML = '<input type="text" class="cand-row-reg" readonly style="width:120px; font-weight:700; color:#FDB827; margin:0;" placeholder="Reg No">' +
+  div.innerHTML = '<input type="text" class="cand-row-reg" readonly style="width:120px; font-weight:700; color:#F34B4B; background:#F3F4F6; margin:0;" placeholder="Reg No">' +
     '<input type="text" class="cand-row-name" onkeyup="refreshCandidateRowsReg()" style="flex:1; margin:0;" placeholder="Enter Member Name">' +
     '<button type="button" onclick="removeCandidateRow(this)" class="btn-danger-sm"><i class="fa-solid fa-trash"></i></button>';
   container.appendChild(div);
@@ -359,7 +289,7 @@ function saveBatchCandidates() {
   saveAllData();
   document.getElementById('candidateRowsContainer').innerHTML = "";
   for (var k = 0; k < 3; k++) addCandidateRow();
-  alert('Successfully saved ' + addedList.length + ' candidate(s) under ' + team + ' (' + cat + ')!');
+  alert('Saved ' + addedList.length + ' candidate(s) under ' + team + ' (' + cat + ')!');
 }
 
 function deleteCandidate(id) {
@@ -370,41 +300,32 @@ function deleteCandidate(id) {
   }
 }
 
-/* 3. PRINT TEAM LIST */
 function printTeamListPDF() {
-  var teams = ["Qahira", "Qudsiya", "Qurthuba"];
-  var categories = ["SENIOR", "JUNIOR", "SUB-JUNIOR"];
-  var win = window.open('', '_blank');
-  var bodyContent = "";
+  var teams = ["Qahira", "Qudsiya", "Qurthuba"], categories = ["SENIOR", "JUNIOR", "SUB-JUNIOR"], win = window.open('', '_blank'), bodyContent = "";
   teams.forEach(team => {
-    bodyContent += '<div style="page-break-after:always; margin-bottom:30px;">' +
-      '<div style="text-align:center; border-bottom:2px solid #D97706; padding-bottom:8px; margin-bottom:15px;">' +
-      festTitleHtml(18, 8) +
-      '<h3 style="margin:4px 0 0 0; color:#D97706; text-transform:uppercase;">OFFICIAL TEAM ROSTER: ' + team.toUpperCase() + '</h3></div>';
+    bodyContent += '<div style="page-break-after:always; margin-bottom:24px;"><div style="text-align:center;border-bottom:2px solid #F34B4B;padding-bottom:8px;margin-bottom:14px;">' +
+      festTitleHtml(18, 8) + '<h3 style="margin:6px 0 0;color:#F34B4B;">TEAM ROSTER: ' + team.toUpperCase() + '</h3></div>';
     categories.forEach(cat => {
       var members = festCandidates.filter(c => c.team === team && c.category === cat);
-      bodyContent += '<h4 style="background:#fff3d1; padding:6px 10px; margin:12px 0 6px 0; border-left:4px solid #D97706;">' + cat + ' CATEGORY</h4>' +
-        '<table style="width:100%; border-collapse:collapse; margin-bottom:15px;"><thead><tr style="background:#09090b;color:#fde68a;">' +
-        '<th style="border:1px solid #cbd5e1; padding:6px; width:10%;">Sl No</th><th style="border:1px solid #cbd5e1; padding:6px; width:25%;">Reg No</th><th style="border:1px solid #cbd5e1; padding:6px; width:65%;">Candidate Name</th></tr></thead><tbody>' +
-        (members.length > 0 ? members.map((m, idx) => '<tr><td style="border:1px solid #cbd5e1; padding:6px; text-align:center;">' + (idx + 1) + '</td><td style="border:1px solid #cbd5e1; padding:6px; font-weight:bold;">' + m.regNo + '</td><td style="border:1px solid #cbd5e1; padding:6px;">' + m.name + '</td></tr>').join('') : '<tr><td colspan="3" style="border:1px solid #cbd5e1; padding:6px; text-align:center; color:#94a3b8;">No participants registered</td></tr>') +
-        '</tbody></table>';
+      bodyContent += '<h4 style="background:#F3F4F6;padding:6px 10px;border-left:4px solid #F34B4B;margin:10px 0 6px;">' + cat + '</h4>' +
+        '<table style="width:100%;border-collapse:collapse;margin-bottom:12px;"><thead><tr style="background:#F3F4F6;">' +
+        '<th style="border:1px solid #E9EAED;padding:6px;width:10%;">Sl</th><th style="border:1px solid #E9EAED;padding:6px;width:25%;">Reg No</th><th style="border:1px solid #E9EAED;padding:6px;width:65%;">Candidate Name</th></tr></thead><tbody>' +
+        (members.length ? members.map((m, idx) => '<tr><td style="border:1px solid #E9EAED;padding:6px;text-align:center;">' + (idx + 1) + '</td><td style="border:1px solid #E9EAED;padding:6px;font-weight:700;">' + m.regNo + '</td><td style="border:1px solid #E9EAED;padding:6px;">' + m.name + '</td></tr>').join('') : '<tr><td colspan="3" style="border:1px solid #E9EAED;padding:6px;text-align:center;color:#94a3b8;">No candidates</td></tr>') + '</tbody></table>';
     });
-    bodyContent += '<div style="display:flex; justify-content:space-between; margin-top:30px; font-weight:bold; font-size:12px;"><div>Team Leader Sign: _________________</div><div>Convener Sign: _________________</div></div></div>';
+    bodyContent += '<div style="display:flex;justify-content:space-between;margin-top:24px;font-size:12px;font-weight:700;"><div>Team Leader Sign: _________________</div><div>Convener Sign: _________________</div></div></div>';
   });
-  win.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Official Team Lists</title><style>@page{size:A4 portrait;margin:12mm}*{box-sizing:border-box;font-family:"Segoe UI",sans-serif}body{background:#fff;color:#0f172a;margin:0}</style></head><body>' + bodyContent + '<script>window.print();<\/script></body></html>');
+  win.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Team Rosters</title><style>@page{size:A4 portrait;margin:12mm}*{box-sizing:border-box;font-family:"Segoe UI",sans-serif}body{background:#fff;color:#202124;margin:0}</style></head><body>' + bodyContent + '<script>window.print();<\/script></body></html>');
   win.document.close();
 }
 
 function updateJudgeProgramDropdown() {
-  var cat = document.getElementById('judgeCatSelect').value;
-  var select = document.getElementById('judgeItemSelect');
+  var cat = document.getElementById('judgeCatSelect').value, select = document.getElementById('judgeItemSelect');
   var progs = (cat === 'GENERAL') ? festPrograms.filter(p => p.type === 'General' || p.category === 'GENERAL') : festPrograms.filter(p => p.category === cat);
   select.innerHTML = progs.length === 0 ? '<option value="">No programs in ' + cat + '</option>' : progs.map(p => '<option value="' + esc(p.name) + '">' + esc(p.name) + ' (' + esc(p.type) + ')</option>').join('');
 }
 
 function updateResultProgramDropdown() {
-  var cat = document.getElementById('resCategory').value;
-  var select = document.getElementById('resItemSelect');
+  var cat = document.getElementById('resCategory').value, select = document.getElementById('resItemSelect');
   var progs = (cat === 'GENERAL') ? festPrograms.filter(p => p.type === 'General' || p.category === 'GENERAL') : festPrograms.filter(p => p.category === cat);
   select.innerHTML = progs.map(p => '<option value="' + esc(p.name) + '">' + esc(p.name) + ' (' + esc(p.type) + ')</option>').join('');
   updateResultCandidateDropdown();
@@ -423,26 +344,19 @@ function deleteResult(id) {
 function renderResultsAdminTable() {
   var container = document.getElementById('resultsAdminTable');
   if (!container) return;
-  if (festResults.length === 0) {
-    container.innerHTML = "<p class='muted-text' style='padding:12px;'>No results evaluated yet.</p>";
-    return;
-  }
-  var html = '<table><thead><tr><th>Candidate / Squad</th><th>Category</th><th>Item</th><th>Mark</th><th>Place</th><th>Status</th><th>Poster</th><th>Action</th></tr></thead><tbody>';
+  if (festResults.length === 0) { container.innerHTML = "<p class='muted-text' style='padding:12px;'>No results evaluated yet.</p>"; return; }
+  var html = '<table><thead><tr><th>Participant</th><th>Category</th><th>Item</th><th>Mark</th><th>Rank</th><th>Status</th><th>Poster</th><th>Action</th></tr></thead><tbody>';
   html += festResults.map(r => {
     var isPub = (r.published === 'YES' || r.published === undefined);
-    var statusBadge = isPub
-      ? '<span class="badge" style="background:rgba(16,185,129,0.2);color:#6ee7b7;border:1px solid #10b981;">PUBLISHED</span>'
-      : '<span class="badge" style="background:rgba(249,115,22,0.2);color:#fdba74;border:1px solid #F97316;">DRAFT</span>';
+    var st = isPub ? '<span class="badge" style="background:#d1fae5;color:#047857;">PUBLISHED</span>' : '<span class="badge" style="background:#FEF2F2;color:#F34B4B;">DRAFT</span>';
     return '<tr><td><b>' + esc(r.name) + '</b> <span class="badge team-badge-' + String(r.team).toLowerCase() + '">' + esc(r.team) + '</span></td>' +
-      '<td>' + esc(r.category) + '</td><td>' + esc(r.program) + '</td><td style="color:#FDB827;font-weight:bold;">' + r.mark + '</td>' +
-      '<td style="color:#F97316;font-weight:700;">' + esc(r.place) + '</td><td>' + statusBadge + '</td>' +
-      '<td><button onclick="openPosterStudioWithData('' + encodeURIComponent(r.name) + '','' + encodeURIComponent(r.team) + '','' + encodeURIComponent(r.category) + '','' + encodeURIComponent(r.program) + '','' + encodeURIComponent(r.place || 'WINNER') + '')" class="btn-gold-sm"><i class="fa-solid fa-wand-magic-sparkles"></i> Poster</button></td>' +
+      '<td>' + esc(r.category) + '</td><td>' + esc(r.program) + '</td><td style="font-weight:800;">' + r.mark + '</td><td style="font-weight:700;color:#F34B4B;">' + esc(r.place) + '</td>' +
+      '<td>' + st + '</td><td><button onclick="openPosterStudioWithData('' + encodeURIComponent(r.name) + '','' + encodeURIComponent(r.team) + '','' + encodeURIComponent(r.category) + '','' + encodeURIComponent(r.program) + '','' + encodeURIComponent(r.place || 'WINNER') + '')" class="btn-outline-sm"><i class="fa-solid fa-wand-magic-sparkles"></i> Poster</button></td>' +
       '<td><button onclick="deleteResult(' + r.id + ')" class="btn-danger-sm"><i class="fa-solid fa-trash"></i></button></td></tr>';
   }).join('');
   container.innerHTML = html + '</tbody></table>';
 }
 
-/* POSTER STUDIO MODAL */
 function openPosterStudioWithData(nameEnc, teamEnc, catEnc, progEnc, posEnc) {
   document.getElementById('pmCandidateName').value = decodeURIComponent(nameEnc);
   document.getElementById('pmTeam').value = decodeURIComponent(teamEnc);
@@ -456,42 +370,27 @@ function openPosterStudioWithData(nameEnc, teamEnc, catEnc, progEnc, posEnc) {
   drawPosterPreview();
 }
 function closePosterStudio() { document.getElementById('posterStudioModal').style.display = 'none'; }
-function setPosterModel(n) {
-  selectedPosterModel = n;
-  document.querySelectorAll('.model-btn').forEach((btn, idx) => btn.classList.toggle('active', (idx + 1) === n));
-  drawPosterPreview();
-}
+function setPosterModel(n) { selectedPosterModel = n; document.querySelectorAll('.model-btn').forEach((b, i) => b.classList.toggle('active', (i + 1) === n)); drawPosterPreview(); }
 function downloadPosterImage() {
-  var canvas = document.getElementById('posterCanvas');
-  var name = document.getElementById('pmCandidateName').value.trim() || 'Winner';
-  var prog = document.getElementById('pmProgram').value.trim() || 'Result';
+  var canvas = document.getElementById('posterCanvas'), name = document.getElementById('pmCandidateName').value.trim() || 'Winner', prog = document.getElementById('pmProgram').value.trim() || 'Result';
   var link = document.createElement('a');
   link.download = 'MMOArtsFest_' + name.replace(/\s+/g, '_') + '_' + prog.replace(/\s+/g, '_') + '_Poster.png';
   link.href = canvas.toDataURL('image/png', 1.0);
   link.click();
 }
 
-/* POINT TABLES (PUBLIC ONLY COUNTS PUBLISHED RESULTS; ADMIN SEES ALL) */
 function addManualCategoryScore() {
-  var cat = document.getElementById('ptCategory').value;
-  var team = document.getElementById('ptTeam').value;
-  var reason = document.getElementById('ptReason').value.trim() || "Manual Adjustment";
-  var marks = Number(document.getElementById('ptMarks').value) || 0;
+  var cat = document.getElementById('ptCategory').value, team = document.getElementById('ptTeam').value, reason = document.getElementById('ptReason').value.trim() || "Manual Adjustment", marks = Number(document.getElementById('ptMarks').value) || 0;
   festResults.push({ id: Date.now(), regNo: '-', name: reason, team: team, category: cat, program: reason, mark: marks, grade: '-', place: '-', published: 'YES' });
-  logAdminAction('Manual score ' + (marks >= 0 ? '+' : '') + marks + ' pts to ' + team + ' (' + cat + ')');
+  logAdminAction('Manual score ' + marks + ' to ' + team + ' (' + cat + ')');
   saveAllData();
-  document.getElementById('ptReason').value = "";
-  document.getElementById('ptMarks').value = "";
+  document.getElementById('ptReason').value = ""; document.getElementById('ptMarks').value = "";
 }
 
 function buildPointTables() {
-  var teams = ["Qurthuba", "Qudsiya", "Qahira"];
-  var teamScores = { "Qurthuba": 0, "Qudsiya": 0, "Qahira": 0 };
-  var categories = ["SENIOR", "JUNIOR", "SUB-JUNIOR", "GENERAL"];
-  var catScores = {};
+  var teams = ["Qurthuba", "Qudsiya", "Qahira"], teamScores = { "Qurthuba": 0, "Qudsiya": 0, "Qahira": 0 }, categories = ["SENIOR", "JUNIOR", "SUB-JUNIOR", "GENERAL"], catScores = {};
   categories.forEach(c => { catScores[c] = { "Qurthuba": 0, "Qudsiya": 0, "Qahira": 0 }; });
 
-  // Only published results count toward public standings
   festResults.filter(r => r.published === 'YES' || r.published === undefined).forEach(r => {
     var m = Number(r.mark || 0);
     if (teamScores[r.team] !== undefined) teamScores[r.team] += m;
@@ -499,11 +398,11 @@ function buildPointTables() {
   });
 
   var sortedTeams = teams.map(t => ({ team: t, score: teamScores[t] })).sort((a, b) => b.score - a.score);
+  var leaderEl = document.getElementById('pubStatLeader');
+  if (leaderEl) leaderEl.textContent = sortedTeams[0] && sortedTeams[0].score > 0 ? sortedTeams[0].team : '—';
+
   var overallHtml = '<table><thead><tr><th>Rank</th><th>Team</th><th>Total Score</th></tr></thead><tbody>' +
-    sortedTeams.map((s, idx) => '<tr class="' + (idx === 0 && s.score > 0 ? 'rank-1-row' : '') + '">' +
-      '<td><b style="color:#FDB827;font-size:15px;">#' + (idx + 1) + (idx === 0 && s.score > 0 ? ' 👑' : '') + '</b></td>' +
-      '<td><span class="badge team-badge-' + s.team.toLowerCase() + '">' + s.team + '</span></td>' +
-      '<td style="font-weight:800;font-size:16px;color:#F97316;">' + s.score + ' pts</td></tr>').join('') + '</tbody></table>';
+    sortedTeams.map((s, idx) => '<tr><td><b>#' + (idx + 1) + '</b></td><td><span class="badge team-badge-' + s.team.toLowerCase() + '">' + s.team + '</span></td><td style="font-weight:800;color:#F34B4B;">' + s.score + ' pts</td></tr>').join('') + '</tbody></table>';
 
   document.getElementById('teamPointsTable').innerHTML = overallHtml;
   document.getElementById('adminPointTablePreview').innerHTML = overallHtml;
@@ -511,16 +410,11 @@ function buildPointTables() {
   var admLb = document.getElementById('adminMiniLeaderboard'); if (admLb) admLb.innerHTML = overallHtml;
 
   document.getElementById('categoryBreakdownTables').innerHTML = categories.map(cat =>
-    '<div class="graphite-section"><h4 style="color:#FDB827;font-size:13px;margin-bottom:8px;">' + cat + ' STANDINGS</h4>' +
-    '<table><thead><tr><th>Team</th><th>Score</th></tr></thead><tbody>' +
-    teams.map(t => '<tr><td><span class="badge team-badge-' + t.toLowerCase() + '">' + t + '</span></td><td style="font-weight:700;color:#F97316;">' + catScores[cat][t] + ' pts</td></tr>').join('') +
-    '</tbody></table></div>').join('');
+    '<div class="surface-card"><h4>' + cat + ' Standings</h4><table><thead><tr><th>Team</th><th>Score</th></tr></thead><tbody>' +
+    teams.map(t => '<tr><td><span class="badge team-badge-' + t.toLowerCase() + '">' + t + '</span></td><td style="font-weight:700;">' + catScores[cat][t] + ' pts</td></tr>').join('') + '</tbody></table></div>').join('');
 
   buildCarousel(catScores);
-
-  liveAnnouncedResults = festResults.filter(r => r.place && r.place !== '-' && r.published === 'YES').map(r => ({
-    program: r.program, category: r.category, winner: r.name + ' (' + r.team + ') - ' + r.place, rawObj: r
-  }));
+  liveAnnouncedResults = festResults.filter(r => r.place && r.place !== '-' && r.published === 'YES').map(r => ({ program: r.program, category: r.category, winner: r.name + ' (' + r.team + ') - ' + r.place, rawObj: r }));
   rotateAnnouncedResult();
 }
 
@@ -528,11 +422,11 @@ function buildCarousel(catScores) {
   carouselSlides = [];
   ["SENIOR", "JUNIOR", "SUB-JUNIOR", "GENERAL"].forEach(cat => {
     var html = '<div class="table-responsive"><table><thead><tr><th>Team</th><th>Current Score</th></tr></thead><tbody>' +
-      '<tr><td><span class="badge team-badge-qurthuba">Qurthuba (Red)</span></td><td><b style="color:#fca5a5;font-size:15px;">' + catScores[cat]["Qurthuba"] + ' pts</b></td></tr>' +
-      '<tr><td><span class="badge team-badge-qudsiya">Qudsiya (Green)</span></td><td><b style="color:#6ee7b7;font-size:15px;">' + catScores[cat]["Qudsiya"] + ' pts</b></td></tr>' +
-      '<tr><td><span class="badge team-badge-qahira">Qahira (Blue)</span></td><td><b style="color:#7dd3fc;font-size:15px;">' + catScores[cat]["Qahira"] + ' pts</b></td></tr>' +
+      '<tr><td><span class="badge team-badge-qurthuba">Qurthuba</span></td><td><b>' + catScores[cat]["Qurthuba"] + ' pts</b></td></tr>' +
+      '<tr><td><span class="badge team-badge-qudsiya">Qudsiya</span></td><td><b>' + catScores[cat]["Qudsiya"] + ' pts</b></td></tr>' +
+      '<tr><td><span class="badge team-badge-qahira">Qahira</span></td><td><b>' + catScores[cat]["Qahira"] + ' pts</b></td></tr>' +
       '</tbody></table></div>';
-    carouselSlides.push({ title: cat + ' STANDINGS', content: html });
+    carouselSlides.push({ title: cat + ' Standings', content: html });
   });
   renderCurrentSlide();
   if (!timerInterval) startCarousel();
@@ -543,13 +437,8 @@ function startCarousel() {
   countdown = 30;
   timerInterval = setInterval(function () {
     countdown--;
-    var b = document.getElementById('rotatorTimerBadge');
-    if (b) b.innerHTML = '<span class="live-pulse"></span> ' + countdown + 's';
-    if (countdown <= 0) {
-      countdown = 30;
-      currentSlideIndex = (currentSlideIndex + 1) % carouselSlides.length;
-      renderCurrentSlide();
-    }
+    var b = document.getElementById('rotatorTimerBadge'); if (b) b.innerHTML = '<span class="coral-dot"></span> ' + countdown + 's';
+    if (countdown <= 0) { countdown = 30; currentSlideIndex = (currentSlideIndex + 1) % carouselSlides.length; renderCurrentSlide(); }
   }, 1000);
 }
 
@@ -566,34 +455,26 @@ function rotateQuote() {
 }
 
 function rotateAnnouncedResult() {
-  var box = document.getElementById('announcedDisplay');
-  if (!box) return;
-  if (!liveAnnouncedResults || liveAnnouncedResults.length === 0) {
-    box.innerHTML = '<div class="muted-text">No results published yet.</div>';
-    return;
-  }
+  var box = document.getElementById('announcedDisplay'); if (!box) return;
+  if (!liveAnnouncedResults || liveAnnouncedResults.length === 0) { box.innerHTML = '<div class="muted-text">No results published yet.</div>'; return; }
   if (resultIndex >= liveAnnouncedResults.length) resultIndex = 0;
   var res = liveAnnouncedResults[resultIndex], rObj = res.rawObj || {};
   box.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">' +
-    '<div><div class="result-program"><i class="fa-solid fa-award"></i> ' + esc(res.program) + '</div>' +
-    '<div class="result-cat">Category: <b>' + esc(res.category) + '</b></div>' +
-    '<div class="result-winner">🥇 Winner: <b>' + esc(res.winner) + '</b></div></div>' +
-    '<button onclick="openPosterStudioWithData('' + encodeURIComponent(rObj.name || '') + '','' + encodeURIComponent(rObj.team || '') + '','' + encodeURIComponent(rObj.category || '') + '','' + encodeURIComponent(rObj.program || '') + '','' + encodeURIComponent(rObj.place || '') + '')" class="btn-gold-sm"><i class="fa-solid fa-wand-magic-sparkles"></i> Poster</button></div>';
+    '<div><div class="result-program">' + esc(res.program) + '</div><div class="result-cat">' + esc(res.category) + '</div><div class="result-winner"><b>' + esc(res.winner) + '</b></div></div>' +
+    '<button onclick="openPosterStudioWithData('' + encodeURIComponent(rObj.name || '') + '','' + encodeURIComponent(rObj.team || '') + '','' + encodeURIComponent(rObj.category || '') + '','' + encodeURIComponent(rObj.program || '') + '','' + encodeURIComponent(rObj.place || '') + '')" class="btn-outline-sm"><i class="fa-solid fa-wand-magic-sparkles"></i> Poster</button></div>';
   resultIndex = (resultIndex + 1) % liveAnnouncedResults.length;
 }
 
-/* ADMIN AUTHENTICATION */
 function authOfficial() {
-  var u = document.getElementById('officialUser').value.trim();
-  var p = document.getElementById('officialPass').value.trim();
+  var u = document.getElementById('officialUser').value.trim(), p = document.getElementById('officialPass').value.trim();
   if (u === "ADMIN" && p === "*mmo#1956") {
     document.getElementById('officialLoginErr').innerText = "";
     document.getElementById('officialAuth').style.display = "none";
     document.getElementById('officialContent').style.display = "block";
-    logAdminAction('Admin unlocked Official Portal');
+    logAdminAction('Signed in to Official Portal');
     refreshAll();
   } else {
-    document.getElementById('officialLoginErr').innerText = "Access Denied: Invalid Official Credentials.";
+    document.getElementById('officialLoginErr').innerText = "Access Denied: Invalid Admin Credentials.";
   }
 }
 
@@ -603,43 +484,28 @@ function logoutOfficial() {
   document.getElementById('officialPass').value = "";
 }
 
-/* PUBLIC STUDENT LOOKUP (ONLY PUBLISHED RESULTS) */
 function lookupResult() {
-  var reg = document.getElementById('studentRegNo').value.trim();
-  var box = document.getElementById('studentResultBox');
+  var reg = document.getElementById('studentRegNo').value.trim(), box = document.getElementById('studentResultBox');
   if (!reg) return;
   var res = festResults.filter(r => String(r.regNo).toLowerCase() === reg.toLowerCase() && (r.published === 'YES' || r.published === undefined));
-  if (res.length > 0) {
-    box.innerHTML = res.map(r =>
-      '<div class="sub-panel" style="margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">' +
+  if (res.length) {
+    box.innerHTML = res.map(r => '<div class="sub-card" style="margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">' +
       '<div><b>' + esc(r.name) + '</b> <span class="badge team-badge-' + String(r.team || '').toLowerCase() + '">' + esc(r.team) + '</span><br>' +
-      '<span class="muted-text">Item: <b style="color:#FDB827;">' + esc(r.program) + '</b> (' + esc(r.category) + ') | Mark: <b style="color:#F97316;">' + r.mark + '</b> | Place: <b>' + esc(r.place || '-') + '</b></span></div>' +
-      '<button onclick="openPosterStudioWithData('' + encodeURIComponent(r.name) + '','' + encodeURIComponent(r.team) + '','' + encodeURIComponent(r.category) + '','' + encodeURIComponent(r.program) + '','' + encodeURIComponent(r.place || 'WINNER') + '')" class="btn-gold-sm"><i class="fa-solid fa-wand-magic-sparkles"></i> Poster</button></div>').join('');
+      '<span class="muted-text">Item: <b>' + esc(r.program) + '</b> (' + esc(r.category) + ') | Mark: <b>' + r.mark + '</b> | Place: <b>' + esc(r.place || '-') + '</b></span></div>' +
+      '<button onclick="openPosterStudioWithData('' + encodeURIComponent(r.name) + '','' + encodeURIComponent(r.team) + '','' + encodeURIComponent(r.category) + '','' + encodeURIComponent(r.program) + '','' + encodeURIComponent(r.place || 'WINNER') + '')" class="btn-outline-sm"><i class="fa-solid fa-wand-magic-sparkles"></i> Poster</button></div>').join('');
   } else {
     box.innerHTML = '<p class="error-text">No published scores found for Reg No: ' + esc(reg) + '</p>';
   }
 }
 
-/* PUBLIC DIRECTORY FILTER (NO CONFIDENTIAL ENTRIES EXPOSED) */
 function filterStudents() {
-  var regQuery = (document.getElementById('searchReg') ? document.getElementById('searchReg').value : '').toLowerCase().trim();
-  var nameQuery = (document.getElementById('searchName') ? document.getElementById('searchName').value : '').toLowerCase().trim();
-  var catQuery = (document.getElementById('searchCategory') ? document.getElementById('searchCategory').value : '').toUpperCase().trim();
-  var teamQuery = (document.getElementById('searchTeam') ? document.getElementById('searchTeam').value : '').trim();
-
-  var list = festCandidates.filter(s =>
-    (!regQuery || String(s.regNo).toLowerCase().includes(regQuery)) &&
-    (!nameQuery || String(s.name).toLowerCase().includes(nameQuery)) &&
-    (!catQuery || String(s.category).toUpperCase() === catQuery) &&
-    (!teamQuery || s.team === teamQuery));
-
-  var container = document.getElementById('teamMembersTable');
-  if (!container) return;
-  if (list.length === 0) {
-    container.innerHTML = "<p class='muted-text' style='padding:12px;'>No matching candidates found.</p>";
-    return;
-  }
-  var html = '<table><thead><tr><th>Reg No</th><th>Name</th><th>Category</th><th>Team</th></tr></thead><tbody>';
-  html += list.map(m => '<tr><td><b style="color:#FDB827;">' + esc(m.regNo) + '</b></td><td>' + esc(m.name) + '</td><td>' + esc(m.category) + '</td><td><span class="badge team-badge-' + m.team.toLowerCase() + '">' + esc(m.team) + '</span></td></tr>').join('');
-  container.innerHTML = html + '</tbody></table>';
+  var regQ = (document.getElementById('searchReg') ? document.getElementById('searchReg').value : '').toLowerCase().trim();
+  var nameQ = (document.getElementById('searchName') ? document.getElementById('searchName').value : '').toLowerCase().trim();
+  var catQ = (document.getElementById('searchCategory') ? document.getElementById('searchCategory').value : '').toUpperCase().trim();
+  var teamQ = (document.getElementById('searchTeam') ? document.getElementById('searchTeam').value : '').trim();
+  var list = festCandidates.filter(s => (!regQ || String(s.regNo).toLowerCase().includes(regQ)) && (!nameQ || String(s.name).toLowerCase().includes(nameQ)) && (!catQ || String(s.category).toUpperCase() === catQ) && (!teamQ || s.team === teamQ));
+  var container = document.getElementById('teamMembersTable'); if (!container) return;
+  if (!list.length) { container.innerHTML = "<p class='muted-text' style='padding:12px;'>No matching candidates found.</p>"; return; }
+  container.innerHTML = '<table><thead><tr><th>Reg No</th><th>Name</th><th>Category</th><th>Team</th></tr></thead><tbody>' +
+    list.map(m => '<tr><td><b style="color:#F34B4B;">' + esc(m.regNo) + '</b></td><td>' + esc(m.name) + '</td><td>' + esc(m.category) + '</td><td><span class="badge team-badge-' + m.team.toLowerCase() + '">' + esc(m.team) + '</span></td></tr>').join('') + '</tbody></table>';
 }

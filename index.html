@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>MMO Arts Fest 2k26 | Beyond The Imagination</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Marcellus&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>MMO Campus Arts Fest 2K26</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css?v=15">
-  <link rel="stylesheet" href="enhance.css?v=15">
+  <link rel="stylesheet" href="style.css?v=16">
+  <link rel="stylesheet" href="enhance.css?v=16">
   <script>
     var FEST_NAME_IMG = 'fest-name.png';
     var FEST_SUB_IMG  = 'campus-arts-fest.png';
@@ -15,620 +15,505 @@
     function festTitleHtml(h1, h2) {
       var bad = "this.style.display='none';this.nextSibling.style.display='block'";
       return '<div style="text-align:center;line-height:1.1">' +
-        '<img src="' + festAbs(FEST_NAME_IMG) + '" style="height:' + h1 + 'mm;max-width:100%" onerror="' + bad + '"><div style="display:none;font-family:Cinzel,serif;font-weight:700;font-size:' + (h1 * 2.2) + 'pt;letter-spacing:2px;text-transform:uppercase">MMO Arts Fest</div>' +
-        '<br><img src="' + festAbs(FEST_SUB_IMG) + '" style="height:' + h2 + 'mm;margin-top:1.2mm;max-width:100%" onerror="' + bad + '"><div style="display:none;font-size:' + (h2 * 1.5) + 'pt;letter-spacing:3px;color:#D97706;font-weight:600">CAMPUS ARTS FESTIVAL 2K26</div></div>';
+        '<img src="' + festAbs(FEST_NAME_IMG) + '" style="height:' + h1 + 'mm;max-width:100%" onerror="' + bad + '"><div style="display:none;font-family:Cinzel,serif;font-weight:800;font-size:' + (h1 * 2.1) + 'pt;color:#202124">MMO Arts Fest</div>' +
+        '<br><img src="' + festAbs(FEST_SUB_IMG) + '" style="height:' + h2 + 'mm;margin-top:1.2mm;max-width:100%" onerror="' + bad + '"><div style="display:none;font-size:' + (h2 * 1.4) + 'pt;letter-spacing:2px;color:#F34B4B;font-weight:700">CAMPUS ARTS FEST 2K26</div></div>';
     }
   </script>
 </head>
 <body>
 
 <div id="drawerOverlay" class="overlay" onclick="closeNav()"></div>
+
+<!-- CORAL-RED LEFT RAIL / DRAWER -->
+<aside id="railNav" class="coral-rail">
+  <div class="rail-brand" onclick="showView('dashboardView')" title="MMO Arts Fest 2K26">
+    <i class="fa-solid fa-sparkles"></i>
+  </div>
+  <nav class="rail-items">
+    <button class="rail-btn active" data-v="dashboardView" onclick="showView('dashboardView')"><i class="fa-solid fa-house"></i><span>Home</span></button>
+    <button class="rail-btn" data-v="programListView" onclick="showView('programListView')"><i class="fa-solid fa-list-check"></i><span>Programs</span></button>
+    <button class="rail-btn" data-v="scheduleView" onclick="showView('scheduleView')"><i class="fa-solid fa-calendar-days"></i><span>Schedule</span></button>
+    <button class="rail-btn" data-v="pointTableView" onclick="showView('pointTableView')"><i class="fa-solid fa-trophy"></i><span>Points</span></button>
+    <button class="rail-btn" data-v="toppersView" onclick="showView('toppersView')"><i class="fa-solid fa-crown"></i><span>Toppers</span></button>
+    <button class="rail-btn" data-v="teamView" onclick="showView('teamView')"><i class="fa-solid fa-users"></i><span>Candidates</span></button>
+    <button class="rail-btn" data-v="notificationsView" onclick="showView('notificationsView')"><i class="fa-solid fa-bell"></i><span>Alerts</span><span id="railBadge" class="rail-badge" style="display:none"></span></button>
+    <button class="rail-btn rail-admin" data-v="officialView" onclick="showView('officialView')"><i class="fa-solid fa-user-shield"></i><span>Admin</span></button>
+  </nav>
+</aside>
+
+<!-- MOBILE SLIDE DRAWER -->
 <div id="sideNav" class="side-drawer">
   <span class="close-btn" onclick="closeNav()">&times;</span>
-  <a href="javascript:void(0)" onclick="showView('dashboardView')"><i class="fa-solid fa-house"></i> Public Overview</a>
-  <a href="javascript:void(0)" onclick="showView('pointTableView')"><i class="fa-solid fa-trophy"></i> Leaderboard & Lookup</a>
+  <a href="javascript:void(0)" onclick="showView('dashboardView')"><i class="fa-solid fa-house"></i> Home Overview</a>
   <a href="javascript:void(0)" onclick="showView('programListView')"><i class="fa-solid fa-list-check"></i> Program List</a>
   <a href="javascript:void(0)" onclick="showView('scheduleView')"><i class="fa-solid fa-calendar-days"></i> Schedule</a>
+  <a href="javascript:void(0)" onclick="showView('pointTableView')"><i class="fa-solid fa-trophy"></i> Point Table &amp; Lookup</a>
   <a href="javascript:void(0)" onclick="showView('toppersView')"><i class="fa-solid fa-crown"></i> Toppers</a>
-  <a href="javascript:void(0)" onclick="showView('teamView')"><i class="fa-solid fa-users"></i> Candidates Directory</a>
+  <a href="javascript:void(0)" onclick="showView('teamView')"><i class="fa-solid fa-users"></i> Candidates</a>
   <a href="javascript:void(0)" onclick="showView('notificationsView')"><i class="fa-solid fa-bell"></i> Notifications <span id="notifBadge" class="notif-badge" style="display:none"></span></a>
-  <a href="javascript:void(0)" onclick="showView('officialView')" class="admin-nav-link"><i class="fa-solid fa-user-shield"></i> Official Portal (Admin)</a>
+  <a href="javascript:void(0)" onclick="showView('officialView')"><i class="fa-solid fa-user-shield"></i> Official Portal (Admin)</a>
 </div>
 
-<div class="app-wrapper">
-  <!-- COMPACT SPLIT HEADER: Program Name Left | Campus Arts Fest Right -->
-  <header class="top-header" id="topHeader">
-    <canvas id="goldParticles"></canvas>
-    <div class="header-bar">
-      <div class="header-brand-left">
-        <img src="fest-name.png" alt="MMO Arts Fest" class="brand-logo-left" onerror="this.style.display='none';document.getElementById('brandTextLeft').style.display='block'">
-        <div id="brandTextLeft" class="brand-fallback-left" style="display:none">
-          <span class="gold-title">MMO ARTS FEST</span>
-          <small>BEYOND THE IMAGINATION</small>
-        </div>
+<div class="main-shell">
+  <!-- TOP WHITE NAVIGATION BAR -->
+  <header class="top-topbar">
+    <div class="topbar-left">
+      <button class="mobile-menu-btn" onclick="openNav()"><i class="fa-solid fa-bars"></i></button>
+      <div class="fest-identity-strip">
+        <img src="fest-name.png" alt="MMO Arts Fest" class="topbar-logo-left" onerror="this.style.display='none';document.getElementById('topbarFallbackLeft').style.display='inline'">
+        <span id="topbarFallbackLeft" class="topbar-title-text" style="display:none">MMO ARTS FEST</span>
+        <span class="topbar-sep">/</span>
+        <img src="campus-arts-fest.png" alt="Campus Arts Fest 2K26" class="topbar-logo-right" onerror="this.style.display='none';document.getElementById('topbarFallbackRight').style.display='inline'">
+        <span id="topbarFallbackRight" class="topbar-sub-text" style="display:none">CAMPUS ARTS FEST 2K26</span>
       </div>
+    </div>
 
-      <div class="header-center-meta">
-        <span class="live-status-pill"><span class="live-pulse"></span> LIVE 2K26</span>
-        <div id="festCountdown" class="fest-countdown">FESTIVAL LIVE</div>
-      </div>
+    <div class="topbar-search-wrap">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="globalSearchInput" onkeyup="runGlobalSearch(this.value)" placeholder="Search programs, candidates, reg no...">
+      <div id="globalSearchResults" class="global-search-dropdown"></div>
+    </div>
 
-      <div class="header-brand-right">
-        <img src="campus-arts-fest.png" alt="Campus Arts Fest 2k26" class="brand-logo-right" onerror="this.style.display='none';document.getElementById('brandTextRight').style.display='block'">
-        <div id="brandTextRight" class="brand-fallback-right" style="display:none">CAMPUS ARTS FEST 2K26</div>
-        <div class="header-actions">
-          <button class="icon-btn" onclick="openNav()" title="Menu"><i class="fa-solid fa-bars"></i></button>
-          <button class="icon-btn" onclick="showView('notificationsView')" title="Notifications"><i class="fa-solid fa-bell"></i><span id="bellCount" class="notif-badge" style="display:none"></span></button>
-          <button class="icon-btn" onclick="toggleFullScreen()" title="Full Screen"><i class="fa-solid fa-expand" id="fsIcon"></i></button>
-          <button class="icon-btn btn-admin-pill" onclick="showView('officialView')"><i class="fa-solid fa-user-shield"></i> Official Portal</button>
-        </div>
-      </div>
+    <div class="topbar-right">
+      <button class="top-icon-btn" onclick="showView('notificationsView')" title="Notifications"><i class="fa-regular fa-bell"></i><span id="bellCount" class="notif-badge" style="display:none"></span></button>
+      <button class="top-icon-btn" onclick="toggleFullScreen()" title="Full Screen"><i class="fa-solid fa-expand" id="fsIcon"></i></button>
+      <button class="btn-coral-pill" onclick="showView('officialView')"><i class="fa-solid fa-user-shield"></i> Official Portal</button>
     </div>
   </header>
 
-  <div class="ribbon"><div class="t"><span>★ MMO ARTS FEST 2K26 ★</span><span>CAMPUS ARTS FESTIVAL</span><span>★ BEYOND THE IMAGINATION ★</span><span>★ QAHIRA • QUDSIYA • QURTHUBA ★</span><span>★ MMO ARTS FEST 2K26 ★</span><span>CAMPUS ARTS FESTIVAL</span><span>★ BEYOND THE IMAGINATION ★</span><span>★ QAHIRA • QUDSIYA • QURTHUBA ★</span></div></div>
-
-  <!-- FLOATING PUBLIC QUICK NAVIGATION -->
-  <nav id="mainNav" class="floating-nav">
-    <div class="nav-links">
-      <a data-v="dashboardView" onclick="showView('dashboardView')"><i class="fa-solid fa-chart-line"></i> Overview</a>
-      <a data-v="pointTableView" onclick="showView('pointTableView')"><i class="fa-solid fa-trophy"></i> Point Table</a>
-      <a data-v="programListView" onclick="showView('programListView')"><i class="fa-solid fa-list-check"></i> Programs</a>
-      <a data-v="scheduleView" onclick="showView('scheduleView')"><i class="fa-solid fa-calendar-days"></i> Schedule</a>
-      <a data-v="toppersView" onclick="showView('toppersView')"><i class="fa-solid fa-crown"></i> Toppers</a>
-      <a data-v="teamView" onclick="showView('teamView')"><i class="fa-solid fa-users"></i> Candidates</a>
-      <a data-v="notificationsView" onclick="showView('notificationsView')"><i class="fa-solid fa-bell"></i> Alerts</a>
-      <a data-v="officialView" onclick="showView('officialView')" class="nav-admin-btn"><i class="fa-solid fa-lock"></i> Official Portal</a>
-    </div>
-    <div class="global-search-box">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="globalSearchInput" onkeyup="runGlobalSearch(this.value)" placeholder="Global search: candidate, reg no, program...">
-      <div id="globalSearchResults" class="global-search-dropdown"></div>
-    </div>
-  </nav>
-
-  <!-- 1. PUBLIC DASHBOARD OVERVIEW -->
-  <div id="dashboardView" class="view-panel active">
-    <div class="section-header-line">
-      <div>
-        <span class="eyebrow-gold">LIVE STATUS • PUBLIC PORTAL</span>
-        <h2>FESTIVAL OVERVIEW</h2>
-      </div>
-      <div class="sync-badge"><i class="fa-solid fa-cloud"></i> Synced: <span id="pubLastSync">Just now</span></div>
-    </div>
-
-    <!-- KPI STAT STRIP (Clean, less boxes, gold separators) -->
-    <div class="kpi-strip">
-      <div class="kpi-cell">
-        <span class="kpi-val" id="pubStatPrograms">0</span>
-        <span class="kpi-lbl">Total Programs</span>
-      </div>
-      <div class="kpi-cell">
-        <span class="kpi-val" id="pubStatCandidates">0</span>
-        <span class="kpi-lbl">Registered Candidates</span>
-      </div>
-      <div class="kpi-cell">
-        <span class="kpi-val" id="pubStatEntries">0</span>
-        <span class="kpi-lbl">Total Entries</span>
-      </div>
-      <div class="kpi-cell">
-        <span class="kpi-val gold-glow" id="pubStatPublished">0</span>
-        <span class="kpi-lbl">Published Results</span>
-      </div>
-    </div>
-
-    <div class="gold-divider"></div>
-
-    <!-- LIVE LEADERBOARD + ANNOUNCEMENTS -->
-    <div class="dashboard-split">
-      <div class="graphite-section">
-        <div class="sec-head-inline">
-          <h3><i class="fa-solid fa-trophy"></i> Live Team Leaderboard</h3>
-          <button class="btn-orange-sm" onclick="showView('pointTableView')">Full Breakdown</button>
-        </div>
-        <div id="pubLiveLeaderboard"></div>
-      </div>
-
-      <div class="graphite-section">
-        <div class="sec-head-inline">
-          <h3><i class="fa-solid fa-bullhorn"></i> Latest Winner Announcements</h3>
-          <span class="badge-timer" id="rotatorTimerBadge"><span class="live-pulse"></span> 30s</span>
-        </div>
-        <div id="announcedDisplay" class="winner-spotlight"><div class="result-program">Loading live results...</div></div>
-        <div class="wisdom-strip" id="quoteDisplay">
-          <div class="quote-text">"The best among you are those who have the best manners and character."</div>
-          <div class="quote-translation"><b>തർജ്ജമ:</b> നിങ്ങളിൽ ഏറ്റവും ഉത്തമർ അത്യുത്തമമായ സ്വഭാവഗുണമുള്ളവരാണ്.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="gold-divider"></div>
-
-    <!-- CATEGORY STANDINGS CAROUSEL -->
-    <div class="graphite-section">
-      <div class="sec-head-inline">
-        <h3 id="displayHeaderTitle">Category Standings</h3>
-      </div>
-      <div id="carouselCardContainer"><p class="muted-text">Synchronizing with cloud database...</p></div>
-    </div>
-
-    <div class="gold-divider"></div>
-
-    <!-- TEAM & CATEGORY SCORE ROTATION -->
-    <div class="graphite-section">
-      <div class="sec-head-inline">
+  <div class="app-content">
+    <!-- 1. PUBLIC DASHBOARD VIEW -->
+    <div id="dashboardView" class="view-panel active">
+      <div class="page-head">
         <div>
-          <h3><i class="fa-solid fa-rotate"></i> Team &amp; Category Score Rotation</h3>
-          <p class="muted-text">Live marksheet rotation across Qahira, Qudsiya, and Qurthuba.</p>
+          <h1>Festival Dashboard</h1>
+          <p class="subtitle">Live standings, schedule updates, and published competition results for MMO Campus Arts Fest 2K26.</p>
         </div>
-        <div class="rot-controls">
-          <button class="rot-btn" onclick="rotPrev()" title="Previous"><i class="fa-solid fa-backward-step"></i></button>
-          <button class="rot-btn" id="rotPauseBtn" onclick="rotTogglePause()" title="Pause / Play"><i class="fa-solid fa-pause"></i></button>
-          <button class="rot-btn" onclick="rotNext()" title="Next"><i class="fa-solid fa-forward-step"></i></button>
-          <select id="rotSpeed" onchange="rotSetSpeed(this.value)" class="compact-select">
-            <option value="10">10s</option><option value="15" selected>15s</option><option value="20">20s</option><option value="30">30s</option>
-          </select>
-          <span class="badge-timer" id="rotCount">1 / 12</span>
+        <div class="sync-pill"><i class="fa-solid fa-rotate"></i> Synced: <b id="pubLastSync">Just now</b></div>
+      </div>
+
+      <!-- SUMMARY METRICS BAR -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Total Programs</div>
+          <div class="stat-value" id="pubStatPrograms">0</div>
         </div>
-      </div>
-      <div class="rot-progress"><div id="rotBar"></div></div>
-      <div id="studentProgramMatrixContainer"></div>
-    </div>
-  </div>
-
-  <!-- 2. POINT TABLE & STUDENT LOOKUP (PUBLIC) -->
-  <div id="pointTableView" class="view-panel">
-    <div class="section-header-line">
-      <div><span class="eyebrow-gold">STANDINGS</span><h2>Grand Team Leaderboard</h2></div>
-    </div>
-    <div id="teamPointsTable" class="table-responsive"></div>
-
-    <div class="gold-divider"></div>
-    <h3 class="gold-heading"><i class="fa-solid fa-layer-group"></i> Category-Wise Breakdown</h3>
-    <div id="categoryBreakdownTables" class="breakdown-grid"></div>
-
-    <div class="gold-divider"></div>
-    <div class="graphite-section">
-      <h3><i class="fa-solid fa-magnifying-glass"></i> Student Score Lookup</h3>
-      <div class="inline-form">
-        <input type="text" id="studentRegNo" placeholder="Enter Registration No (e.g. MMOSA01)">
-        <button class="btn-orange" onclick="lookupResult()"><i class="fa-solid fa-search"></i> Search Score</button>
-      </div>
-      <div id="studentResultBox" style="margin-top:12px;"></div>
-    </div>
-  </div>
-
-  <!-- 3. OFFICIAL ADMIN PORTAL (CONFIDENTIAL CONTROLS LOCKED HERE) -->
-  <div id="officialView" class="view-panel">
-    <!-- LOGIN GATE -->
-    <div id="officialAuth" class="admin-login-gate">
-      <div class="lock-icon"><i class="fa-solid fa-shield-halved"></i></div>
-      <h2>Official Portal Access</h2>
-      <p class="muted-text">Confidential festival management, entries, judges slips, unpublished drafts, and score controls are restricted to authorized officials.</p>
-      <input type="text" id="officialUser" placeholder="Admin Username" autocomplete="username">
-      <input type="password" id="officialPass" placeholder="Admin Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')authOfficial()">
-      <button class="btn-orange" onclick="authOfficial()"><i class="fa-solid fa-right-to-bracket"></i> Unlock Official Portal</button>
-      <div id="officialLoginErr" class="error-text"></div>
-    </div>
-
-    <!-- CONFIDENTIAL ADMIN CONTROL ROOM (HIDDEN UNTIL LOGIN) -->
-    <div id="officialContent" style="display:none;">
-      <!-- FLOATING ADMIN QUICK NAVIGATION -->
-      <div class="admin-quick-nav">
-        <span class="aqn-label"><i class="fa-solid fa-bolt"></i> QUICK NAVIGATION</span>
-        <a onclick="jumpAdminSection('secFestControl')">Overview</a>
-        <a onclick="jumpAdminSection('secPrograms')">Programs</a>
-        <a onclick="jumpAdminSection('secCandidates')">Candidates</a>
-        <a onclick="jumpAdminSection('secEntries')">Entries</a>
-        <a onclick="jumpAdminSection('secSchedule')">Schedule</a>
-        <a onclick="jumpAdminSection('secJudges')">Judges</a>
-        <a onclick="jumpAdminSection('secResults')">Results</a>
-        <a onclick="jumpAdminSection('secAnalytics')">Analytics</a>
-        <div class="aqn-actions">
-          <button onclick="openPrintCenter()" class="btn-gold-sm"><i class="fa-solid fa-print"></i> Export Centre</button>
-          <button onclick="syncToCloud()" class="btn-orange-sm"><i class="fa-solid fa-cloud-arrow-up"></i> Cloud Sync</button>
-          <button onclick="logoutOfficial()" class="btn-danger-sm"><i class="fa-solid fa-lock"></i> Lock</button>
+        <div class="stat-card">
+          <div class="stat-label">Registered Candidates</div>
+          <div class="stat-value" id="pubStatCandidates">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Published Results</div>
+          <div class="stat-value coral-text" id="pubStatPublished">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Leading Team</div>
+          <div class="stat-value" id="pubStatLeader">—</div>
         </div>
       </div>
 
-      <!-- FEST CONTROL ROOM OVERVIEW -->
-      <section id="secFestControl" class="fest-control-room">
-        <div class="fcr-header">
+      <div class="two-col-grid">
+        <div class="surface-card">
+          <div class="card-head">
+            <h3>Live Team Standings</h3>
+            <button class="btn-coral-sm" onclick="showView('pointTableView')">Point Table</button>
+          </div>
+          <div id="pubLiveLeaderboard"></div>
+        </div>
+
+        <div class="surface-card">
+          <div class="card-head">
+            <h3>Published Result Spotlight</h3>
+            <span class="timer-chip" id="rotatorTimerBadge"><span class="coral-dot"></span> 30s</span>
+          </div>
+          <div id="announcedDisplay" class="spotlight-box"><div class="muted-text">Loading published results...</div></div>
+          <div class="quote-box" id="quoteDisplay">
+            <div class="quote-text">"The best among you are those who have the best manners and character."</div>
+            <div class="quote-translation"><b>തർജ്ജമ:</b> നിങ്ങളിൽ ഏറ്റവും ഉത്തമർ അത്യുത്തമമായ സ്വഭാവഗുണമുള്ളവരാണ്.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="surface-card">
+        <div class="card-head">
+          <h3 id="displayHeaderTitle">Category Standings</h3>
+        </div>
+        <div id="carouselCardContainer"><p class="muted-text">Loading category standings...</p></div>
+      </div>
+
+      <div class="surface-card">
+        <div class="card-head">
           <div>
-            <span class="eyebrow-gold"><span class="live-pulse"></span> CENTRAL COMMAND</span>
-            <h2>FEST CONTROL</h2>
+            <h3>Team &amp; Category Score Rotation</h3>
+            <p class="muted-text">Published marksheet view rotating across teams and categories.</p>
           </div>
-          <div class="fcr-sync-info">
-            <span>Last Cloud Sync: <b id="adminLastSync">Not synced yet</b></span>
-          </div>
-        </div>
-
-        <div class="kpi-strip">
-          <div class="kpi-cell"><span class="kpi-val" id="admStatPrograms">0</span><span class="kpi-lbl">Total Programs</span></div>
-          <div class="kpi-cell"><span class="kpi-val" id="admStatCandidates">0</span><span class="kpi-lbl">Total Candidates</span></div>
-          <div class="kpi-cell"><span class="kpi-val" id="admStatEntries">0</span><span class="kpi-lbl">Total Entries</span></div>
-          <div class="kpi-cell"><span class="kpi-val orange-glow" id="admStatPending">0</span><span class="kpi-lbl">Pending Results</span></div>
-        </div>
-
-        <div class="fcr-grid">
-          <div class="fcr-block">
-            <h4><i class="fa-solid fa-trophy"></i> Live Standings</h4>
-            <div id="adminMiniLeaderboard"></div>
-          </div>
-          <div class="fcr-block">
-            <h4><i class="fa-solid fa-clock"></i> Upcoming &amp; Pending Tasks</h4>
-            <div id="adminPendingTasks"></div>
-          </div>
-          <div class="fcr-block">
-            <h4><i class="fa-solid fa-history"></i> Recent Admin Activities</h4>
-            <div id="adminRecentLogs"></div>
-          </div>
-        </div>
-
-        <div class="quick-shortcuts">
-          <span>Quick Shortcuts:</span>
-          <button class="btn-orange-sm" onclick="jumpAdminSection('secCandidates')"><i class="fa-solid fa-user-plus"></i> + Register Candidate</button>
-          <button class="btn-orange-sm" onclick="jumpAdminSection('secPrograms')"><i class="fa-solid fa-plus"></i> + Add Program</button>
-          <button class="btn-orange-sm" onclick="jumpAdminSection('secResults')"><i class="fa-solid fa-award"></i> + Enter Result</button>
-          <button class="btn-gold-sm" onclick="printEntryFormPDF()"><i class="fa-solid fa-file-signature"></i> Print Entry Form</button>
-        </div>
-      </section>
-
-      <div class="gold-divider"></div>
-
-      <!-- SECTION IDENTITY 1: PROGRAMS MANAGEMENT (Gold Accent Border) -->
-      <section id="secPrograms" class="mgmt-section identity-programs">
-        <div class="mgmt-header">
-          <div>
-            <span class="id-tag">01 • PROGRAMS MANAGEMENT</span>
-            <h3>Competition Items &amp; Team Limits</h3>
-            <p class="muted-text">Program categories, competition types, registration status and program counts.</p>
-          </div>
-          <button class="btn-gold-sm" onclick="printReport(['programs'])"><i class="fa-solid fa-print"></i> Print Program List</button>
-        </div>
-
-        <div class="form-grid">
-          <div>
-            <label>Program Type</label>
-            <select id="progType" onchange="toggleCategorySelect()">
-              <option value="Individual">Individual (വ്യക്തിഗതം)</option>
-              <option value="Group">Group (ഗ്രൂപ്പ് ഇനം)</option>
-              <option value="Non-Stage">Non-Stage (നോൺ സ്റ്റേജ്)</option>
-              <option value="General">General (ഓൾ ടീം / ജനറൽ ഗ്രൂപ്പ്)</option>
+          <div class="rot-controls">
+            <button class="rot-btn" onclick="rotPrev()" title="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="rot-btn" id="rotPauseBtn" onclick="rotTogglePause()" title="Pause / Play"><i class="fa-solid fa-pause"></i></button>
+            <button class="rot-btn" onclick="rotNext()" title="Next"><i class="fa-solid fa-chevron-right"></i></button>
+            <select id="rotSpeed" onchange="rotSetSpeed(this.value)" class="compact-select">
+              <option value="10">10s</option><option value="15" selected>15s</option><option value="20">20s</option><option value="30">30s</option>
             </select>
-          </div>
-          <div id="progCatWrapper">
-            <label>Category</label>
-            <select id="progCategory">
-              <option value="SENIOR">Senior</option>
-              <option value="JUNIOR">Junior</option>
-              <option value="SUB-JUNIOR">Sub-Junior</option>
-            </select>
-          </div>
-          <div>
-            <label>Max per team (blank = Ind 3, others ∞)</label>
-            <input type="number" id="progMax" min="0" placeholder="e.g. 3">
+            <span class="timer-chip" id="rotCount">1 / 12</span>
           </div>
         </div>
-        <div id="programRowsContainer">
-          <div class="program-input-row" style="display:flex;gap:8px;margin-bottom:8px;">
-            <input type="text" class="prog-name-input" placeholder="Enter Program Name (e.g. Qira'at, Quiz, Madih, Duff)">
-          </div>
-        </div>
-        <div class="btn-row">
-          <button class="btn-ghost" type="button" onclick="addMoreProgramRow()"><i class="fa-solid fa-plus"></i> Add Another Row</button>
-          <button class="btn-orange" type="button" onclick="savePrograms()"><i class="fa-solid fa-save"></i> Save Programs</button>
-        </div>
-        <div id="programsListTable" class="table-responsive"></div>
-      </section>
+        <div class="rot-progress"><div id="rotBar"></div></div>
+        <div id="studentProgramMatrixContainer"></div>
+      </div>
+    </div>
 
-      <div class="gold-divider"></div>
+    <!-- 2. POINT TABLE & STUDENT SCORE LOOKUP (PUBLIC) -->
+    <div id="pointTableView" class="view-panel">
+      <div class="page-head">
+        <div><h1>Point Table &amp; Standings</h1><p class="subtitle">Official points from published competition results.</p></div>
+      </div>
+      <div class="surface-card">
+        <h3>Grand Team Leaderboard</h3>
+        <div id="teamPointsTable" class="table-responsive"></div>
+      </div>
+      <div id="categoryBreakdownTables" class="breakdown-grid"></div>
+      <div class="surface-card">
+        <h3>Student Score Lookup</h3>
+        <div class="inline-form">
+          <input type="text" id="studentRegNo" placeholder="Enter Registration No (e.g. MMOSA01)">
+          <button class="btn-coral" onclick="lookupResult()"><i class="fa-solid fa-search"></i> Search Score</button>
+        </div>
+        <div id="studentResultBox" style="margin-top:12px;"></div>
+      </div>
+    </div>
 
-      <!-- SECTION IDENTITY 2: CANDIDATE MANAGEMENT (Blue/Cyan Left Stripe) -->
-      <section id="secCandidates" class="mgmt-section identity-candidates">
-        <div class="mgmt-header">
-          <div>
-            <span class="id-tag">02 • CANDIDATE MANAGEMENT</span>
-            <h3>Register &amp; Manage Team Rosters</h3>
-            <p class="muted-text">Search, filter, register, edit and manage candidates across Qahira, Qudsiya, and Qurthuba.</p>
+    <!-- 3. SINGLE-PAGE SCROLLING ADMIN DASHBOARD (CONFIDENTIAL CONTROLS LOCKED) -->
+    <div id="officialView" class="view-panel">
+      <div id="officialAuth" class="login-card">
+        <div class="login-badge"><i class="fa-solid fa-lock"></i></div>
+        <h2>Official Admin Portal</h2>
+        <p class="muted-text">Sign in to access festival overview, entries, judges slips, unpublished drafts, and result publishing.</p>
+        <input type="text" id="officialUser" placeholder="Admin Username" autocomplete="username">
+        <input type="password" id="officialPass" placeholder="Admin Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')authOfficial()">
+        <button class="btn-coral" style="width:100%" onclick="authOfficial()"><i class="fa-solid fa-right-to-bracket"></i> Sign In</button>
+        <div id="officialLoginErr" class="error-text"></div>
+      </div>
+
+      <div id="officialContent" style="display:none;">
+        <!-- STICKY ADMIN SECTION BAR -->
+        <div class="admin-sticky-bar">
+          <a onclick="jumpAdminSection('admOverview')">Overview</a>
+          <a onclick="jumpAdminSection('admPrograms')">Programs</a>
+          <a onclick="jumpAdminSection('admCandidates')">Candidates</a>
+          <a onclick="jumpAdminSection('admEntries')">Entries</a>
+          <a onclick="jumpAdminSection('admSchedule')">Schedule</a>
+          <a onclick="jumpAdminSection('admJudges')">Judges &amp; Print</a>
+          <a onclick="jumpAdminSection('admResults')">Results</a>
+          <a onclick="jumpAdminSection('admAnnouncements')">Announcements</a>
+          <a onclick="jumpAdminSection('admPoints')">Points &amp; Analytics</a>
+          <div class="admin-bar-actions">
+            <button class="btn-coral-sm" onclick="syncToCloud()"><i class="fa-solid fa-cloud-arrow-up"></i> Save to Cloud</button>
+            <button class="btn-outline-sm" onclick="logoutOfficial()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+          </div>
+        </div>
+
+        <!-- 1. FESTIVAL OVERVIEW -->
+        <section id="admOverview" class="surface-card admin-sec">
+          <div class="card-head">
+            <div><h1>Festival Overview</h1><p class="subtitle">Live operational counts, upcoming events, pending tasks, and recent activity.</p></div>
+            <span class="muted-text">Last Cloud Sync: <b id="adminLastSync">Not synced yet</b></span>
+          </div>
+          <div class="stats-row">
+            <div class="stat-card"><div class="stat-label">Total Programs</div><div class="stat-value" id="admStatPrograms">0</div></div>
+            <div class="stat-card"><div class="stat-label">Registered Candidates</div><div class="stat-value" id="admStatCandidates">0</div></div>
+            <div class="stat-card"><div class="stat-label">Total Entries</div><div class="stat-value" id="admStatEntries">0</div></div>
+            <div class="stat-card"><div class="stat-label">Pending Results</div><div class="stat-value coral-text" id="admStatPending">0</div></div>
+          </div>
+          <div class="three-col-grid">
+            <div class="sub-card"><h4>Current Standings</h4><div id="adminMiniLeaderboard"></div></div>
+            <div class="sub-card"><h4>Pending &amp; Upcoming</h4><div id="adminPendingTasks"></div></div>
+            <div class="sub-card"><h4>Recent Activity</h4><div id="adminRecentLogs"></div></div>
+          </div>
+        </section>
+
+        <!-- 2. PROGRAMS -->
+        <section id="admPrograms" class="surface-card admin-sec">
+          <div class="card-head">
+            <div><h2>Programs</h2><p class="muted-text">Add, edit, or filter competition items and per-team limits.</p></div>
+            <button class="btn-outline-sm" onclick="printReport(['programs'])"><i class="fa-solid fa-print"></i> Print Programs</button>
+          </div>
+          <div class="form-grid">
+            <div><label>Program Type</label>
+              <select id="progType" onchange="toggleCategorySelect()">
+                <option value="Individual">Individual</option>
+                <option value="Group">Group</option>
+                <option value="Non-Stage">Non-Stage</option>
+                <option value="General">General</option>
+              </select></div>
+            <div id="progCatWrapper"><label>Category</label>
+              <select id="progCategory">
+                <option value="SENIOR">Senior</option>
+                <option value="JUNIOR">Junior</option>
+                <option value="SUB-JUNIOR">Sub-Junior</option>
+              </select></div>
+            <div><label>Max / Team (0 = unlimited)</label><input type="number" id="progMax" min="0" placeholder="e.g. 3"></div>
+          </div>
+          <div id="programRowsContainer">
+            <div class="program-input-row" style="display:flex;gap:8px;margin-bottom:8px;">
+              <input type="text" class="prog-name-input" placeholder="Program name (e.g. Qira'at, Quiz, Group Song)">
+            </div>
           </div>
           <div class="btn-row">
-            <button class="btn-ghost" onclick="printTeamListPDF()"><i class="fa-solid fa-print"></i> Team Roster PDF</button>
-            <button class="btn-gold-sm" onclick="printEntryFormPDF()"><i class="fa-solid fa-file-signature"></i> Tick-Mark Entry Form</button>
+            <button class="btn-outline-sm" type="button" onclick="addMoreProgramRow()"><i class="fa-solid fa-plus"></i> Add Row</button>
+            <button class="btn-coral" type="button" onclick="savePrograms()"><i class="fa-solid fa-save"></i> Save Programs</button>
           </div>
-        </div>
+          <div id="programsListTable" class="table-responsive"></div>
+        </section>
 
-        <div class="form-grid">
-          <div>
-            <label>1. Select Category</label>
-            <select id="candCategory" onchange="refreshCandidateRowsReg()">
-              <option value="SENIOR">Senior (S)</option>
-              <option value="JUNIOR">Junior (J)</option>
-              <option value="SUB-JUNIOR">Sub-Junior (SJ)</option>
-            </select>
-          </div>
-          <div>
-            <label>2. Select Team</label>
-            <select id="candTeam" onchange="refreshCandidateRowsReg()">
-              <option value="Qahira">Qahira (ഖാഹിറ) - A (Blue)</option>
-              <option value="Qudsiya">Qudsiya (ഖുദ്‌സിയ) - B (Green)</option>
-              <option value="Qurthuba">Qurthuba (ഖുർത്തുബ) - C (Red)</option>
-            </select>
-          </div>
-        </div>
-        <div class="sub-panel">
-          <div class="sec-head-inline">
-            <label style="margin:0;color:var(--gold);">Candidate Names &amp; Auto Reg Numbers</label>
-            <button type="button" class="btn-ghost-sm" onclick="addCandidateRow()"><i class="fa-solid fa-plus"></i> Add Member Row</button>
-          </div>
-          <div id="candidateRowsContainer" style="margin-top:10px;"></div>
-        </div>
-        <button class="btn-orange" onclick="saveBatchCandidates()"><i class="fa-solid fa-save"></i> Save All Members</button>
-        <div id="candidatesListTable" class="table-responsive"></div>
-      </section>
-
-      <div class="gold-divider"></div>
-
-      <!-- SECTION IDENTITY 3: PROGRAM ENTRIES MATRIX -->
-      <section id="secEntries" class="mgmt-section identity-entries">
-        <div class="mgmt-header">
-          <div>
-            <span class="id-tag">03 • PROGRAM ENTRIES</span>
-            <h3>Candidate Participation Matrix</h3>
-            <p class="muted-text">Tick programs for each candidate. Per-team limits are enforced automatically.</p>
-          </div>
-          <div class="btn-row">
-            <button class="btn-gold-sm" onclick="openPrintCenter({report:'participants',team:document.getElementById('entTeam').value,cat:document.getElementById('entCat').value})"><i class="fa-solid fa-print"></i> Print Participants</button>
-            <button class="btn-orange-sm" onclick="saveEntries()"><i class="fa-solid fa-cloud-arrow-up"></i> Save Entries</button>
-          </div>
-        </div>
-        <div class="form-grid">
-          <div><label>Team</label>
-            <select id="entTeam" onchange="renderEntriesTab()"><option value="Qahira">Qahira (Blue)</option><option value="Qudsiya">Qudsiya (Green)</option><option value="Qurthuba">Qurthuba (Red)</option></select></div>
-          <div><label>Category</label>
-            <select id="entCat" onchange="renderEntriesTab()"><option value="SENIOR">Senior</option><option value="JUNIOR">Junior</option><option value="SUB-JUNIOR">Sub-Junior</option></select></div>
-        </div>
-        <div style="margin-bottom:8px;"><span id="entStatus"></span></div>
-        <div id="entriesTable" class="table-responsive ent-wrap"></div>
-      </section>
-
-      <div class="gold-divider"></div>
-
-      <!-- SECTION IDENTITY 4: SCHEDULE & JUDGES -->
-      <section id="secSchedule" class="mgmt-section identity-schedule">
-        <div class="mgmt-header">
-          <div>
-            <span class="id-tag">04 • STAGE SCHEDULE</span>
-            <h3>Event Timetable Management</h3>
-          </div>
-          <button class="btn-gold-sm" onclick="printSchedule()"><i class="fa-solid fa-print"></i> Print Schedule</button>
-        </div>
-        <div class="form-grid">
-          <div><label>Date</label><input type="date" id="schDate"></div>
-          <div><label>Start Time</label><input type="time" id="schTime"></div>
-          <div><label>End Time</label><input type="time" id="schEnd"></div>
-          <div><label>Program</label><input type="text" id="schProgram" list="schProgList" placeholder="Pick or type program"></div>
-          <div><label>Category</label><select id="schCategory"><option value="ALL">All Categories</option><option value="SENIOR">Senior</option><option value="JUNIOR">Junior</option><option value="SUB-JUNIOR">Sub-Junior</option><option value="GENERAL">General</option></select></div>
-          <div><label>Venue / Stage</label><input type="text" id="schVenue" placeholder="e.g. Main Stage"></div>
-        </div>
-        <input type="text" id="schNote" placeholder="Note (optional)">
-        <datalist id="schProgList"></datalist>
-        <button class="btn-orange" onclick="addScheduleItem()"><i class="fa-solid fa-plus"></i> Add to Schedule</button>
-        <div id="schedAdminList" class="table-responsive"></div>
-      </section>
-
-      <div class="gold-divider"></div>
-
-      <section id="secJudges" class="mgmt-section identity-judges">
-        <div class="mgmt-header">
-          <div>
-            <span class="id-tag">05 • JUDGES EVALUATION SLIPS</span>
-            <h3>Confidential Code &amp; Name Slips</h3>
-          </div>
-        </div>
-        <div class="form-grid">
-          <div>
-            <label>Category / Scope</label>
-            <select id="judgeCatSelect" onchange="updateJudgeProgramDropdown()">
-              <option value="SENIOR">Senior</option>
-              <option value="JUNIOR">Junior</option>
-              <option value="SUB-JUNIOR">Sub-Junior</option>
-              <option value="GENERAL">General (All Teams)</option>
-            </select>
-          </div>
-          <div>
-            <label>Competition Item</label>
-            <select id="judgeItemSelect"></select>
-          </div>
-          <div>
-            <label>Code Letters (A–P)</label>
-            <select id="judgeCodes"><option value="3">3 (A–C)</option><option value="4">4 (A–D)</option><option value="5">5 (A–E)</option><option value="6">6 (A–F)</option><option value="7">7 (A–G)</option><option value="8">8 (A–H)</option><option value="9" selected>9 (A–I)</option><option value="10">10 (A–J)</option><option value="12">12 (A–L)</option><option value="16">16 (A–P)</option></select>
-          </div>
-          <div>
-            <label>A4 Pages (4 slips/page)</label>
-            <input type="number" id="judgePages" min="1" max="50" value="1">
-          </div>
-        </div>
-        <label class="checkbox-inline"><input type="checkbox" id="judgeNamesSlip" checked> Slip 1 = Candidate-name slip (confidential, for stage coordinator only)</label>
-        <div class="btn-row" style="margin-top:10px;">
-          <button class="btn-orange" onclick="printJudgesSlip()"><i class="fa-solid fa-print"></i> Print 4 Slips (Selected Item)</button>
-          <button class="btn-ghost" onclick="printBlankJudgesSlips()"><i class="fa-solid fa-file"></i> Print 4 Blank Slips</button>
-        </div>
-
-        <div class="sub-panel" style="margin-top:16px;">
-          <h4 style="color:var(--gold);margin-bottom:6px;">Custom Mixed Slip Sheet (4 per A4)</h4>
-          <div id="jcRows"></div>
-          <div class="btn-row" style="margin:10px 0;">
-            <button type="button" class="btn-ghost-sm" onclick="jcAddRow()"><i class="fa-solid fa-plus"></i> Add Item Row</button>
-            <label style="margin:0;">Repeat Sheet: <input type="number" id="jcRepeat" min="1" max="50" value="1" oninput="jcPreview()" style="width:70px;margin:0;display:inline-block;"></label>
-            <button class="btn-orange-sm" onclick="printCustomSlips()"><i class="fa-solid fa-print"></i> Print Custom Sheet</button>
-          </div>
-          <div id="jcPreview"></div>
-        </div>
-      </section>
-
-      <div class="gold-divider"></div>
-
-      <!-- SECTION IDENTITY 6: RESULTS MANAGEMENT (Orange Accent Border) -->
-      <section id="secResults" class="mgmt-section identity-results">
-        <div class="mgmt-header">
-          <div>
-            <span class="id-tag">06 • RESULTS MANAGEMENT</span>
-            <h3>Evaluation, Publishing &amp; Winner Posters</h3>
-            <p class="muted-text">Result entry, rank assignment, grade, points, draft queue and live publishing.</p>
-          </div>
-          <button class="btn-gold-sm" onclick="printReport(['results'])"><i class="fa-solid fa-print"></i> Print Results</button>
-        </div>
-
-        <div class="form-grid">
-          <div><label>Category / Scope</label>
-            <select id="resCategory" onchange="updateResultProgramDropdown()"><option value="SENIOR">Senior</option><option value="JUNIOR">Junior</option><option value="SUB-JUNIOR">Sub-Junior</option><option value="GENERAL">General (Team)</option></select></div>
-          <div><label>Competition Item</label><select id="resItemSelect"></select></div>
-          <div><label>Publish Status</label>
-            <select id="resPublished"><option value="YES">Publish Immediately</option><option value="NO">Save as Confidential Draft</option></select></div>
-        </div>
-        <details class="pts-box"><summary>Points Settings (Rank + Grade Marks)</summary>
-          <div class="pts-grid">
-            <label>1st<input type="number" id="rbR1" onchange="rbSavePointInputs()"></label><label>2nd<input type="number" id="rbR2" onchange="rbSavePointInputs()"></label><label>3rd<input type="number" id="rbR3" onchange="rbSavePointInputs()"></label>
-            <label>Grade A<input type="number" id="rbGA" onchange="rbSavePointInputs()"></label><label>Grade B<input type="number" id="rbGB" onchange="rbSavePointInputs()"></label><label>Grade C<input type="number" id="rbGC" onchange="rbSavePointInputs()"></label>
-          </div>
-        </details>
-        <div id="resBatchTable" class="table-responsive"></div>
-        <div class="btn-row" style="margin-top:12px;">
-          <span>Auto-fill ungraded with:</span>
-          <select id="rbFillSel" class="compact-select"><option>A</option><option>B</option><option selected>C</option></select>
-          <button class="btn-ghost-sm" onclick="rbFillGrades()">Apply Grade</button>
-          <button class="btn-orange" onclick="saveResultBatch()"><i class="fa-solid fa-save"></i> Save Result</button>
-        </div>
-
-        <!-- DRAFT ANNOUNCEMENT QUEUE -->
-        <div class="sub-panel" style="margin-top:18px;">
-          <div class="sec-head-inline">
-            <h4 style="color:var(--gold);"><i class="fa-solid fa-bullhorn"></i> Unpublished Draft Results Queue</h4>
+        <!-- 3. CANDIDATES -->
+        <section id="admCandidates" class="surface-card admin-sec">
+          <div class="card-head">
+            <div><h2>Candidates</h2><p class="muted-text">Register team members with automatic registration numbers and print entry forms.</p></div>
             <div class="btn-row">
-              <button class="btn-orange-sm" onclick="announceSelected()">Publish Selected</button>
-              <button class="btn-gold-sm" onclick="announceAllDrafts()">Publish All Drafts</button>
+              <button class="btn-outline-sm" onclick="printTeamListPDF()"><i class="fa-solid fa-print"></i> Team List PDF</button>
+              <button class="btn-coral-sm" onclick="printEntryFormPDF()"><i class="fa-solid fa-file-signature"></i> Print Entry Form</button>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div><label>Category</label>
+              <select id="candCategory" onchange="refreshCandidateRowsReg()">
+                <option value="SENIOR">Senior (S)</option>
+                <option value="JUNIOR">Junior (J)</option>
+                <option value="SUB-JUNIOR">Sub-Junior (SJ)</option>
+              </select></div>
+            <div><label>Team</label>
+              <select id="candTeam" onchange="refreshCandidateRowsReg()">
+                <option value="Qahira">Qahira (A)</option>
+                <option value="Qudsiya">Qudsiya (B)</option>
+                <option value="Qurthuba">Qurthuba (C)</option>
+              </select></div>
+          </div>
+          <div class="sub-card" style="margin-bottom:12px;">
+            <div class="card-head">
+              <label style="margin:0">Candidate Names &amp; Auto Reg Numbers</label>
+              <button type="button" class="btn-outline-sm" onclick="addCandidateRow()"><i class="fa-solid fa-plus"></i> Add Member</button>
+            </div>
+            <div id="candidateRowsContainer" style="margin-top:10px;"></div>
+          </div>
+          <button class="btn-coral" onclick="saveBatchCandidates()"><i class="fa-solid fa-save"></i> Save All Members</button>
+          <div id="candidatesListTable" class="table-responsive"></div>
+        </section>
+
+        <!-- 4. ENTRIES (CONFIDENTIAL TEAM TICK MATRIX) -->
+        <section id="admEntries" class="surface-card admin-sec">
+          <div class="card-head">
+            <div><h2>Entries</h2><p class="muted-text">Confidential participant-to-program matrix with per-team limits.</p></div>
+            <div class="btn-row">
+              <button class="btn-outline-sm" onclick="openPrintCenter({report:'participants',team:document.getElementById('entTeam').value,cat:document.getElementById('entCat').value})"><i class="fa-solid fa-print"></i> Print Participants</button>
+              <button class="btn-coral-sm" onclick="saveEntries()"><i class="fa-solid fa-cloud-arrow-up"></i> Save Entries</button>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div><label>Team</label>
+              <select id="entTeam" onchange="renderEntriesTab()"><option value="Qahira">Qahira</option><option value="Qudsiya">Qudsiya</option><option value="Qurthuba">Qurthuba</option></select></div>
+            <div><label>Category</label>
+              <select id="entCat" onchange="renderEntriesTab()"><option value="SENIOR">Senior</option><option value="JUNIOR">Junior</option><option value="SUB-JUNIOR">Sub-Junior</option></select></div>
+          </div>
+          <div style="margin-bottom:8px;"><span id="entStatus"></span></div>
+          <div id="entriesTable" class="table-responsive ent-wrap"></div>
+        </section>
+
+        <!-- 5. SCHEDULE -->
+        <section id="admSchedule" class="surface-card admin-sec">
+          <div class="card-head">
+            <div><h2>Schedule</h2><p class="muted-text">Manage competition dates, times, categories, and venues.</p></div>
+            <button class="btn-outline-sm" onclick="printSchedule()"><i class="fa-solid fa-print"></i> Print Schedule</button>
+          </div>
+          <div class="form-grid">
+            <div><label>Date</label><input type="date" id="schDate"></div>
+            <div><label>Start Time</label><input type="time" id="schTime"></div>
+            <div><label>End Time</label><input type="time" id="schEnd"></div>
+            <div><label>Program</label><input type="text" id="schProgram" list="schProgList" placeholder="Pick or type program"></div>
+            <div><label>Category</label><select id="schCategory"><option value="ALL">All Categories</option><option value="SENIOR">Senior</option><option value="JUNIOR">Junior</option><option value="SUB-JUNIOR">Sub-Junior</option><option value="GENERAL">General</option></select></div>
+            <div><label>Venue</label><input type="text" id="schVenue" placeholder="e.g. Main Stage"></div>
+          </div>
+          <input type="text" id="schNote" placeholder="Note (optional)">
+          <datalist id="schProgList"></datalist>
+          <button class="btn-coral" onclick="addScheduleItem()"><i class="fa-solid fa-plus"></i> Add to Schedule</button>
+          <div id="schedAdminList" class="table-responsive"></div>
+        </section>
+
+        <!-- 6. JUDGES & PRINT CENTER -->
+        <section id="admJudges" class="surface-card admin-sec">
+          <div class="card-head">
+            <div><h2>Judges &amp; Print Center</h2><p class="muted-text">Print confidential evaluation code slips, name slips, custom sheets, and export reports.</p></div>
+            <button class="btn-outline-sm" onclick="openPrintCenter()"><i class="fa-solid fa-sliders"></i> Export &amp; Print Centre</button>
+          </div>
+          <div class="form-grid">
+            <div><label>Category</label>
+              <select id="judgeCatSelect" onchange="updateJudgeProgramDropdown()"><option value="SENIOR">Senior</option><option value="JUNIOR">Junior</option><option value="SUB-JUNIOR">Sub-Junior</option><option value="GENERAL">General</option></select></div>
+            <div><label>Competition Item</label><select id="judgeItemSelect"></select></div>
+            <div><label>Code Letters</label>
+              <select id="judgeCodes"><option value="3">3 (A–C)</option><option value="4">4 (A–D)</option><option value="5">5 (A–E)</option><option value="6">6 (A–F)</option><option value="7">7 (A–G)</option><option value="8">8 (A–H)</option><option value="9" selected>9 (A–I)</option><option value="10">10 (A–J)</option><option value="12">12 (A–L)</option><option value="16">16 (A–P)</option></select></div>
+            <div><label>A4 Pages (4/page)</label><input type="number" id="judgePages" min="1" max="50" value="1"></div>
+          </div>
+          <label class="checkbox-inline"><input type="checkbox" id="judgeNamesSlip" checked> Include confidential candidate-name slip on slip 1</label>
+          <div class="btn-row" style="margin-top:10px;">
+            <button class="btn-coral" onclick="printJudgesSlip()"><i class="fa-solid fa-print"></i> Print 4 Slips</button>
+            <button class="btn-outline-sm" onclick="printBlankJudgesSlips()"><i class="fa-solid fa-file"></i> Print 4 Blank Slips</button>
+          </div>
+          <div class="sub-card" style="margin-top:14px;">
+            <h4>Custom Mixed Slip Sheet</h4>
+            <div id="jcRows"></div>
+            <div class="btn-row" style="margin:8px 0;">
+              <button type="button" class="btn-outline-sm" onclick="jcAddRow()"><i class="fa-solid fa-plus"></i> Add Item Row</button>
+              <label style="margin:0">Repeat: <input type="number" id="jcRepeat" min="1" max="50" value="1" oninput="jcPreview()" style="width:70px;margin:0;display:inline-block;"></label>
+              <button class="btn-coral-sm" onclick="printCustomSlips()"><i class="fa-solid fa-print"></i> Print Custom Sheet</button>
+            </div>
+            <div id="jcPreview"></div>
+          </div>
+        </section>
+
+        <!-- 7. RESULTS -->
+        <section id="admResults" class="surface-card admin-sec">
+          <div class="card-head">
+            <div><h2>Results</h2><p class="muted-text">Assign ranks and grades, calculate points, and control draft vs. published status.</p></div>
+            <button class="btn-outline-sm" onclick="printReport(['results'])"><i class="fa-solid fa-print"></i> Print Results</button>
+          </div>
+          <div class="form-grid">
+            <div><label>Category</label>
+              <select id="resCategory" onchange="updateResultProgramDropdown()"><option value="SENIOR">Senior</option><option value="JUNIOR">Junior</option><option value="SUB-JUNIOR">Sub-Junior</option><option value="GENERAL">General</option></select></div>
+            <div><label>Competition Item</label><select id="resItemSelect"></select></div>
+            <div><label>Publish Status</label>
+              <select id="resPublished"><option value="YES">Publish Immediately</option><option value="NO">Save as Draft (Hidden)</option></select></div>
+          </div>
+          <details class="pts-box"><summary>Points Settings (Rank + Grade Marks)</summary>
+            <div class="pts-grid">
+              <label>1st<input type="number" id="rbR1" onchange="rbSavePointInputs()"></label><label>2nd<input type="number" id="rbR2" onchange="rbSavePointInputs()"></label><label>3rd<input type="number" id="rbR3" onchange="rbSavePointInputs()"></label>
+              <label>Grade A<input type="number" id="rbGA" onchange="rbSavePointInputs()"></label><label>Grade B<input type="number" id="rbGB" onchange="rbSavePointInputs()"></label><label>Grade C<input type="number" id="rbGC" onchange="rbSavePointInputs()"></label>
+            </div>
+          </details>
+          <div id="resBatchTable" class="table-responsive"></div>
+          <div class="btn-row" style="margin-top:12px;">
+            <span class="muted-text">Fill ungraded with:</span>
+            <select id="rbFillSel" class="compact-select"><option>A</option><option>B</option><option selected>C</option></select>
+            <button class="btn-outline-sm" onclick="rbFillGrades()">Apply Grade</button>
+            <button class="btn-coral" onclick="saveResultBatch()"><i class="fa-solid fa-save"></i> Save Result</button>
+          </div>
+          <h4 style="margin:18px 0 8px;">Evaluated Results &amp; Poster Studio</h4>
+          <div id="resultsAdminTable" class="table-responsive"></div>
+        </section>
+
+        <!-- 8. ANNOUNCEMENTS -->
+        <section id="admAnnouncements" class="surface-card admin-sec">
+          <div class="card-head">
+            <div><h2>Announcements</h2><p class="muted-text">Publish draft results in batches and broadcast live alerts.</p></div>
+            <div class="btn-row">
+              <button class="btn-coral-sm" onclick="announceSelected()">Publish Selected</button>
+              <button class="btn-outline-sm" onclick="announceAllDrafts()">Publish All Drafts</button>
             </div>
           </div>
           <div id="announceDrafts" class="table-responsive"></div>
-        </div>
-
-        <!-- DIRECT ANNOUNCEMENT BROADCAST -->
-        <div class="sub-panel" style="margin-top:14px;">
-          <h4 style="color:var(--gold);margin-bottom:8px;"><i class="fa-solid fa-tower-broadcast"></i> Broadcast Live Alert</h4>
-          <div class="inline-form">
-            <input type="text" id="annTitle" placeholder="Alert Title (e.g. Senior Qira'at starting on Main Stage)">
-            <input type="text" id="annText" placeholder="Message details">
-            <button class="btn-orange" onclick="sendAnnouncement()"><i class="fa-solid fa-paper-plane"></i> Send Alert</button>
+          <div class="sub-card" style="margin-top:14px;">
+            <h4>Send Broadcast Alert</h4>
+            <div class="inline-form">
+              <input type="text" id="annTitle" placeholder="Alert title">
+              <input type="text" id="annText" placeholder="Message">
+              <button class="btn-coral" onclick="sendAnnouncement()"><i class="fa-solid fa-paper-plane"></i> Send</button>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <h4 style="color:var(--gold);margin:18px 0 8px;">Evaluated Results &amp; HD Poster Generator</h4>
-        <div id="resultsAdminTable" class="table-responsive"></div>
-      </section>
-
-      <div class="gold-divider"></div>
-
-      <!-- SECTION IDENTITY 7: TEAM POINTS & ANALYTICS -->
-      <section id="secAnalytics" class="mgmt-section identity-points">
-        <div class="mgmt-header">
-          <div>
-            <span class="id-tag">07 • TEAM POINTS &amp; ANALYTICS</span>
-            <h3>Qahira, Qudsiya &amp; Qurthuba Standings &amp; Metrics</h3>
+        <!-- 9. POINTS & ANALYTICS -->
+        <section id="admPoints" class="surface-card admin-sec">
+          <div class="card-head">
+            <div><h2>Team Points &amp; Analytics</h2><p class="muted-text">Manual score adjustments, team point totals, and result metrics.</p></div>
+            <button class="btn-outline-sm" onclick="printReport(['points'])"><i class="fa-solid fa-print"></i> Print Point Table</button>
           </div>
-          <button class="btn-gold-sm" onclick="printReport(['points'])"><i class="fa-solid fa-print"></i> Print Point Table</button>
-        </div>
-
-        <div class="sub-panel">
-          <h4 style="color:var(--gold);margin-bottom:8px;">Manual Bonus / Penalty Adjustment</h4>
-          <div class="form-grid">
-            <select id="ptCategory"><option value="SENIOR">Senior</option><option value="JUNIOR">Junior</option><option value="SUB-JUNIOR">Sub-Junior</option><option value="GENERAL">General</option></select>
-            <select id="ptTeam"><option value="Qurthuba">Qurthuba (Red)</option><option value="Qudsiya">Qudsiya (Green)</option><option value="Qahira">Qahira (Blue)</option></select>
-            <input type="text" id="ptReason" placeholder="Reason / Event Name">
-            <input type="number" id="ptMarks" placeholder="Marks (e.g. 5 or -2)">
+          <div class="sub-card" style="margin-bottom:14px;">
+            <h4>Manual Score Adjustment</h4>
+            <div class="form-grid">
+              <select id="ptCategory"><option value="SENIOR">Senior</option><option value="JUNIOR">Junior</option><option value="SUB-JUNIOR">Sub-Junior</option><option value="GENERAL">General</option></select>
+              <select id="ptTeam"><option value="Qurthuba">Qurthuba</option><option value="Qudsiya">Qudsiya</option><option value="Qahira">Qahira</option></select>
+              <input type="text" id="ptReason" placeholder="Reason / Event name">
+              <input type="number" id="ptMarks" placeholder="Points (e.g. 5)">
+            </div>
+            <button class="btn-coral" onclick="addManualCategoryScore()"><i class="fa-solid fa-plus"></i> Add Team Score</button>
           </div>
-          <button class="btn-orange" onclick="addManualCategoryScore()"><i class="fa-solid fa-plus"></i> Apply Adjustment</button>
+          <div id="adminPointTablePreview" class="table-responsive" style="margin-bottom:14px;"></div>
+          <div id="analyticsBox"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- 4. REGISTERED CANDIDATES (PUBLIC) -->
+    <div id="teamView" class="view-panel">
+      <div class="page-head">
+        <div><h1>Registered Candidates</h1><p class="subtitle">Search participants by registration number, name, category, or team.</p></div>
+        <div class="btn-row">
+          <button class="btn-outline-sm" onclick="printTeamListPDF()"><i class="fa-solid fa-print"></i> Team List PDF</button>
+          <button class="btn-coral-sm" onclick="printEntryFormPDF()"><i class="fa-solid fa-file-signature"></i> Print Entry Form</button>
         </div>
-
-        <div id="adminPointTablePreview" class="table-responsive" style="margin-bottom:20px;"></div>
-        <div id="analyticsBox"></div>
-      </section>
-    </div>
-  </div>
-
-  <!-- 4. REGISTERED CANDIDATES (PUBLIC DIRECTORY — NO CONFIDENTIAL ENTRY TICKS EXPOSED) -->
-  <div id="teamView" class="view-panel">
-    <div class="section-header-line">
-      <div>
-        <span class="eyebrow-gold">PARTICIPANTS</span>
-        <h2>Registered Candidates Directory</h2>
       </div>
-      <div class="btn-row">
-        <button class="btn-ghost-sm" onclick="printTeamListPDF()"><i class="fa-solid fa-print"></i> Team List PDF</button>
-        <button class="btn-orange-sm" onclick="printEntryFormPDF()"><i class="fa-solid fa-file-signature"></i> Blank Entry Form</button>
-      </div>
-    </div>
-    <div class="search-row">
-      <input type="text" id="searchReg" onkeyup="filterStudents()" placeholder="🔍 Search Reg No (e.g. MMOSA01)...">
-      <input type="text" id="searchName" onkeyup="filterStudents()" placeholder="🔍 Search Candidate Name...">
-      <select id="searchCategory" onchange="filterStudents()">
-        <option value="">All Categories</option>
-        <option value="SENIOR">Senior</option>
-        <option value="JUNIOR">Junior</option>
-        <option value="SUB-JUNIOR">Sub-Junior</option>
-      </select>
-      <select id="searchTeam" onchange="filterStudents()">
-        <option value="">All Teams</option>
-        <option value="Qurthuba">Qurthuba (Red)</option>
-        <option value="Qudsiya">Qudsiya (Green)</option>
-        <option value="Qahira">Qahira (Blue)</option>
-      </select>
-    </div>
-    <div id="teamMembersTable" class="table-responsive"></div>
-  </div>
-
-  <!-- 5. PROGRAM LIST (PUBLIC) -->
-  <div id="programListView" class="view-panel">
-    <div class="section-header-line">
-      <div><span class="eyebrow-gold">COMPETITIONS</span><h2>Program List</h2></div>
-      <div class="btn-row">
-        <select id="plFilter" onchange="renderProgramListView()" class="compact-select"><option value="">All Categories</option><option value="SENIOR">Senior</option><option value="JUNIOR">Junior</option><option value="SUB-JUNIOR">Sub-Junior</option><option value="GENERAL">General</option></select>
-        <button class="btn-orange-sm" onclick="printProgramList()"><i class="fa-solid fa-print"></i> Print</button>
+      <div class="surface-card">
+        <div class="search-row">
+          <input type="text" id="searchReg" onkeyup="filterStudents()" placeholder="Search Reg No (e.g. MMOSA01)...">
+          <input type="text" id="searchName" onkeyup="filterStudents()" placeholder="Search Name...">
+          <select id="searchCategory" onchange="filterStudents()">
+            <option value="">All Categories</option>
+            <option value="SENIOR">Senior</option>
+            <option value="JUNIOR">Junior</option>
+            <option value="SUB-JUNIOR">Sub-Junior</option>
+          </select>
+          <select id="searchTeam" onchange="filterStudents()">
+            <option value="">All Teams</option>
+            <option value="Qurthuba">Qurthuba</option>
+            <option value="Qudsiya">Qudsiya</option>
+            <option value="Qahira">Qahira</option>
+          </select>
+        </div>
+        <div id="teamMembersTable" class="table-responsive"></div>
       </div>
     </div>
-    <div id="programListBox"></div>
-  </div>
 
-  <!-- 6. SCHEDULE (PUBLIC) -->
-  <div id="scheduleView" class="view-panel">
-    <div class="section-header-line">
-      <div><span class="eyebrow-gold">TIMETABLE</span><h2>Program Schedule</h2></div>
-      <div class="btn-row">
-        <select id="schedFilter" onchange="renderScheduleViews()" class="compact-select"><option value="ALL">All Categories</option><option value="SENIOR">Senior</option><option value="JUNIOR">Junior</option><option value="SUB-JUNIOR">Sub-Junior</option><option value="GENERAL">General</option></select>
-        <button class="btn-orange-sm" onclick="printSchedule()"><i class="fa-solid fa-print"></i> Print</button>
+    <!-- 5. PROGRAM LIST (PUBLIC) -->
+    <div id="programListView" class="view-panel">
+      <div class="page-head">
+        <div><h1>Program List</h1><p class="subtitle">Competition categories, types, and team entry limits.</p></div>
+        <div class="btn-row">
+          <select id="plFilter" onchange="renderProgramListView()" class="compact-select"><option value="">All Categories</option><option value="SENIOR">Senior</option><option value="JUNIOR">Junior</option><option value="SUB-JUNIOR">Sub-Junior</option><option value="GENERAL">General</option></select>
+          <button class="btn-coral-sm" onclick="printProgramList()"><i class="fa-solid fa-print"></i> Print</button>
+        </div>
       </div>
+      <div class="surface-card"><div id="programListBox"></div></div>
     </div>
-    <div id="scheduleBox"></div>
-  </div>
 
-  <!-- 7. TOPPERS (PUBLIC) -->
-  <div id="toppersView" class="view-panel">
-    <div class="section-header-line">
-      <div><span class="eyebrow-gold">HALL OF FAME</span><h2>Category Toppers</h2></div>
-      <div class="btn-row">
-        <select id="topFilter" onchange="renderToppers()" class="compact-select"><option value="">All Categories</option><option value="SENIOR">Senior</option><option value="JUNIOR">Junior</option><option value="SUB-JUNIOR">Sub-Junior</option></select>
-        <button class="btn-orange-sm" onclick="printToppers()"><i class="fa-solid fa-print"></i> Print</button>
+    <!-- 6. SCHEDULE (PUBLIC) -->
+    <div id="scheduleView" class="view-panel">
+      <div class="page-head">
+        <div><h1>Schedule</h1><p class="subtitle">Event dates, timings, categories, and venues.</p></div>
+        <div class="btn-row">
+          <select id="schedFilter" onchange="renderScheduleViews()" class="compact-select"><option value="ALL">All Categories</option><option value="SENIOR">Senior</option><option value="JUNIOR">Junior</option><option value="SUB-JUNIOR">Sub-Junior</option><option value="GENERAL">General</option></select>
+          <button class="btn-coral-sm" onclick="printSchedule()"><i class="fa-solid fa-print"></i> Print</button>
+        </div>
       </div>
+      <div class="surface-card"><div id="scheduleBox"></div></div>
     </div>
-    <div id="toppersBox"></div>
-  </div>
 
-  <!-- 8. NOTIFICATIONS (PUBLIC) -->
-  <div id="notificationsView" class="view-panel">
-    <div class="section-header-line">
-      <div><span class="eyebrow-gold">LIVE FEED</span><h2>Festival Notifications</h2></div>
+    <!-- 7. TOPPERS (PUBLIC) -->
+    <div id="toppersView" class="view-panel">
+      <div class="page-head">
+        <div><h1>Toppers</h1><p class="subtitle">Top individual scorers based on published results.</p></div>
+        <div class="btn-row">
+          <select id="topFilter" onchange="renderToppers()" class="compact-select"><option value="">All Categories</option><option value="SENIOR">Senior</option><option value="JUNIOR">Junior</option><option value="SUB-JUNIOR">Sub-Junior</option></select>
+          <button class="btn-coral-sm" onclick="printToppers()"><i class="fa-solid fa-print"></i> Print</button>
+        </div>
+      </div>
+      <div id="toppersBox"></div>
     </div>
-    <div id="noticeList"></div>
+
+    <!-- 8. NOTIFICATIONS (PUBLIC) -->
+    <div id="notificationsView" class="view-panel">
+      <div class="page-head">
+        <div><h1>Notifications</h1><p class="subtitle">Official announcements and result updates.</p></div>
+      </div>
+      <div id="noticeList"></div>
+    </div>
   </div>
 </div>
 
@@ -636,59 +521,55 @@
 <div id="posterStudioModal" class="poster-modal">
   <div class="poster-modal-dialog">
     <div class="poster-modal-header">
-      <h3 style="color:var(--gold);font-size:16px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-wand-magic-sparkles"></i> MMO Arts Fest Poster Studio</h3>
-      <span style="font-size:26px;cursor:pointer;color:var(--text-muted);" onclick="closePosterStudio()">&times;</span>
+      <h3><i class="fa-solid fa-wand-magic-sparkles"></i> Poster Studio</h3>
+      <span style="font-size:24px;cursor:pointer;color:#4B5565" onclick="closePosterStudio()">&times;</span>
     </div>
     <div class="poster-modal-body">
       <div>
-        <label>Select Design Model</label>
+        <label>Design Model</label>
         <div class="model-selector-bar">
-          <button class="model-btn active" onclick="setPosterModel(1)">Model 1<br><small>Obsidian Gold</small></button>
-          <button class="model-btn" onclick="setPosterModel(2)">Model 2<br><small>Ember</small></button>
-          <button class="model-btn" onclick="setPosterModel(3)">Model 3<br><small>Royal Violet</small></button>
-          <button class="model-btn" onclick="setPosterModel(4)">Model 4<br><small>Deep Ocean</small></button>
-          <button class="model-btn" onclick="setPosterModel(5)">Model 5<br><small>Aurum</small></button>
+          <button class="model-btn active" onclick="setPosterModel(1)">Model 1</button>
+          <button class="model-btn" onclick="setPosterModel(2)">Model 2</button>
+          <button class="model-btn" onclick="setPosterModel(3)">Model 3</button>
+          <button class="model-btn" onclick="setPosterModel(4)">Model 4</button>
+          <button class="model-btn" onclick="setPosterModel(5)">Model 5</button>
         </div>
-        <div class="sub-panel">
-          <b style="font-size:12.5px;color:var(--gold);"><i class="fa-solid fa-image"></i> Custom Poster Template (PNG)</b>
-          <input type="file" id="pmBgFile" accept="image/png,image/jpeg,image/webp" style="margin-top:6px;">
-          <button type="button" class="btn-ghost-sm" id="pmClearBg">Use Built-in Model</button>
+        <div class="sub-card" style="margin-bottom:10px;">
+          <label>Custom Background Template (PNG)</label>
+          <input type="file" id="pmBgFile" accept="image/png,image/jpeg,image/webp">
+          <button type="button" class="btn-outline-sm" id="pmClearBg">Use Built-in Model</button>
         </div>
         <label>Candidate Name</label>
-        <input type="text" id="pmCandidateName" list="pmNameList" oninput="drawPosterPreview()" placeholder="Type or pick a student">
-        <div style="display:flex;gap:10px;">
-          <div style="flex:1;">
-            <label>Position / Place</label>
+        <input type="text" id="pmCandidateName" list="pmNameList" oninput="drawPosterPreview()">
+        <div class="form-grid">
+          <div><label>Position / Place</label>
             <select id="pmPosition" onchange="drawPosterPreview()">
               <option value="FIRST PLACE">1st Place</option>
               <option value="SECOND PLACE">2nd Place</option>
               <option value="THIRD PLACE">3rd Place</option>
               <option value="SPECIAL JURY">Special Jury</option>
               <option value="A GRADE">A Grade</option>
-            </select>
-          </div>
-          <div style="flex:1;">
-            <label>Team</label>
+            </select></div>
+          <div><label>Team</label>
             <select id="pmTeam" onchange="drawPosterPreview()">
-              <option value="Qahira">Qahira (Blue)</option>
-              <option value="Qudsiya">Qudsiya (Green)</option>
-              <option value="Qurthuba">Qurthuba (Red)</option>
-            </select>
-          </div>
+              <option value="Qahira">Qahira</option>
+              <option value="Qudsiya">Qudsiya</option>
+              <option value="Qurthuba">Qurthuba</option>
+            </select></div>
         </div>
-        <div style="display:flex;gap:10px;">
-          <div style="flex:1;"><label>Category</label><input type="text" id="pmCategory" oninput="drawPosterPreview()" placeholder="Senior / Junior"></div>
-          <div style="flex:1;"><label>Program / Item</label><input type="text" id="pmProgram" list="pmProgList" oninput="drawPosterPreview()" placeholder="e.g. Qira'at"></div>
+        <div class="form-grid">
+          <div><label>Category</label><input type="text" id="pmCategory" oninput="drawPosterPreview()"></div>
+          <div><label>Program</label><input type="text" id="pmProgram" list="pmProgList" oninput="drawPosterPreview()"></div>
         </div>
-        <label>Festival Title / Subtext</label>
-        <input type="text" id="pmSubHeader" oninput="drawPosterPreview()" value="Campus Arts Festival 2k26 • MMO">
-        <label>Congratulatory Greeting</label>
+        <label>Subtext</label>
+        <input type="text" id="pmSubHeader" oninput="drawPosterPreview()" value="Campus Arts Fest 2K26 • MMO">
+        <label>Greeting</label>
         <input type="text" id="pmGreeting" oninput="drawPosterPreview()" value="MUBARAK! HEARTY CONGRATULATIONS">
         <label>Custom Rank Text (optional)</label>
-        <input type="text" id="pmRankText" oninput="drawPosterPreview()" placeholder="e.g. 1st Place, A+ Grade">
-        <div class="sub-panel">
-          <b style="font-size:12.5px;color:var(--gold);"><i class="fa-solid fa-user"></i> Candidate Photo (Drag preview to position)</b>
-          <input type="file" id="pmPhotoFile" accept="image/*" style="margin-top:6px;">
+        <input type="text" id="pmRankText" oninput="drawPosterPreview()">
+        <div class="sub-card" style="margin-bottom:10px;">
+          <label>Candidate Photo (Drag canvas to move)</label>
+          <input type="file" id="pmPhotoFile" accept="image/*">
           <div class="pm-grid">
             <label>Left–Right<input type="range" id="pmPhotoX" min="0" max="100" value="50" oninput="drawPosterPreview()"></label>
             <label>Up–Down<input type="range" id="pmPhotoY" min="0" max="100" value="40" oninput="drawPosterPreview()"></label>
@@ -696,34 +577,33 @@
             <label>Shape<select id="pmShape" onchange="drawPosterPreview()"><option value="circle">Circle</option><option value="rounded">Rounded</option><option value="square">Square</option></select></label>
           </div>
         </div>
-        <div class="sub-panel">
+        <div class="sub-card" style="margin-bottom:12px;">
           <div class="pm-grid">
-            <label>Text Offset<input type="range" id="pmTextY" min="-250" max="250" value="0" oninput="drawPosterPreview()"></label>
+            <label>Text Y Offset<input type="range" id="pmTextY" min="-250" max="250" value="0" oninput="drawPosterPreview()"></label>
             <label>Text Tone<select id="pmTextColor" onchange="drawPosterPreview()"><option value="light">Light</option><option value="dark">Dark</option></select></label>
           </div>
-          <label class="checkbox-inline" style="margin-top:6px;"><input type="checkbox" id="pmShowHeader" checked onchange="drawPosterPreview()"> Show fest header on custom PNG</label>
+          <label class="checkbox-inline" style="margin-top:6px;"><input type="checkbox" id="pmShowHeader" checked onchange="drawPosterPreview()"> Show top header on custom template</label>
         </div>
         <datalist id="pmNameList"></datalist><datalist id="pmProgList"></datalist>
-        <button class="btn-orange" style="padding:13px;font-size:14px;margin-top:8px;" onclick="downloadPosterImage()"><i class="fa-solid fa-download"></i> Download HD Poster (PNG)</button>
+        <button class="btn-coral" style="width:100%;padding:12px;" onclick="downloadPosterImage()"><i class="fa-solid fa-download"></i> Download Poster (PNG)</button>
       </div>
       <div class="preview-stage">
         <canvas id="posterCanvas" width="1080" height="1350"></canvas>
-        <span style="color:#94a3b8;font-size:11px;margin-top:8px;">1080 × 1350 px (HD 4:5 Status Ready)</span>
       </div>
     </div>
   </div>
 </div>
 
-<script src="app.js?v=15"></script>
-<script src="entry-form.js?v=15"></script>
-<script src="judges.js?v=15"></script>
-<script src="poster.js?v=15"></script>
-<script src="rotation.js?v=15"></script>
-<script src="entries.js?v=15"></script>
-<script src="results.js?v=15"></script>
-<script src="report.js?v=15"></script>
-<script src="schedule.js?v=15"></script>
-<script src="notify.js?v=15"></script>
-<script src="analytics.js?v=15"></script>
+<script src="app.js?v=16"></script>
+<script src="entry-form.js?v=16"></script>
+<script src="judges.js?v=16"></script>
+<script src="poster.js?v=16"></script>
+<script src="rotation.js?v=16"></script>
+<script src="entries.js?v=16"></script>
+<script src="results.js?v=16"></script>
+<script src="report.js?v=16"></script>
+<script src="schedule.js?v=16"></script>
+<script src="notify.js?v=16"></script>
+<script src="analytics.js?v=16"></script>
 </body>
 </html>
