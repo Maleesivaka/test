@@ -92,7 +92,7 @@ function runGlobalSearch(q) {
     box.innerHTML = '<div class="gs-item"><span class="muted-text">No matches found</span></div>';
   } else {
     box.innerHTML = hits.slice(0, 8).map(function (h) {
-      return '<div class="gs-item" onclick="showView('' + h.view + '');document.getElementById('globalSearchResults').style.display='none'"><b>' + esc(h.label) + '</b><span class="badge" style="background:#FEF2F2;color:#F34B4B;">' + esc(h.tag) + '</span></div>';
+      return '<div class="gs-item" onclick="showView('' + h.view + '');document.getElementById('globalSearchResults').style.display='none'"><b>' + esc(h.label) + '</b><span class="badge" style="background:#EBF3FC;color:#185ABD;">' + esc(h.tag) + '</span></div>';
     }).join('');
   }
   box.style.display = 'block';
@@ -198,7 +198,7 @@ function updateDashboardOverviews() {
     lBox.innerHTML = adminLogs.length === 0
       ? '<p class="muted-text">No recent admin actions in this session.</p>'
       : adminLogs.slice(0, 5).map(function (l) {
-          return '<div style="font-size:12px;padding:4px 0;border-bottom:1px solid var(--border);"><b style="color:#F34B4B;">' + l.time + '</b> — ' + esc(l.text) + '</div>';
+          return '<div style="font-size:12px;padding:4px 0;border-bottom:1px solid var(--border);"><b style="color:#185ABD;">' + l.time + '</b> — ' + esc(l.text) + '</div>';
         }).join('');
   }
 }
@@ -246,7 +246,7 @@ function addCandidateRow() {
   var div = document.createElement('div');
   div.className = 'cand-multi-row';
   div.style.cssText = 'display:flex; gap:10px; margin-bottom:8px; align-items:center;';
-  div.innerHTML = '<input type="text" class="cand-row-reg" readonly style="width:120px; font-weight:700; color:#F34B4B; background:#F3F4F6; margin:0;" placeholder="Reg No">' +
+  div.innerHTML = '<input type="text" class="cand-row-reg" readonly style="width:120px; font-weight:700; color:#185ABD; background:#F3F4F6; margin:0;" placeholder="Reg No">' +
     '<input type="text" class="cand-row-name" onkeyup="refreshCandidateRowsReg()" style="flex:1; margin:0;" placeholder="Enter Member Name">' +
     '<button type="button" onclick="removeCandidateRow(this)" class="btn-danger-sm"><i class="fa-solid fa-trash"></i></button>';
   container.appendChild(div);
@@ -303,11 +303,11 @@ function deleteCandidate(id) {
 function printTeamListPDF() {
   var teams = ["Qahira", "Qudsiya", "Qurthuba"], categories = ["SENIOR", "JUNIOR", "SUB-JUNIOR"], win = window.open('', '_blank'), bodyContent = "";
   teams.forEach(team => {
-    bodyContent += '<div style="page-break-after:always; margin-bottom:24px;"><div style="text-align:center;border-bottom:2px solid #F34B4B;padding-bottom:8px;margin-bottom:14px;">' +
-      festTitleHtml(18, 8) + '<h3 style="margin:6px 0 0;color:#F34B4B;">TEAM ROSTER: ' + team.toUpperCase() + '</h3></div>';
+    bodyContent += '<div style="page-break-after:always; margin-bottom:24px;"><div style="text-align:center;border-bottom:2px solid #185ABD;padding-bottom:8px;margin-bottom:14px;">' +
+      festTitleHtml(18, 8) + '<h3 style="margin:6px 0 0;color:#185ABD;">TEAM ROSTER: ' + team.toUpperCase() + '</h3></div>';
     categories.forEach(cat => {
       var members = festCandidates.filter(c => c.team === team && c.category === cat);
-      bodyContent += '<h4 style="background:#F3F4F6;padding:6px 10px;border-left:4px solid #F34B4B;margin:10px 0 6px;">' + cat + '</h4>' +
+      bodyContent += '<h4 style="background:#F3F4F6;padding:6px 10px;border-left:4px solid #185ABD;margin:10px 0 6px;">' + cat + '</h4>' +
         '<table style="width:100%;border-collapse:collapse;margin-bottom:12px;"><thead><tr style="background:#F3F4F6;">' +
         '<th style="border:1px solid #E9EAED;padding:6px;width:10%;">Sl</th><th style="border:1px solid #E9EAED;padding:6px;width:25%;">Reg No</th><th style="border:1px solid #E9EAED;padding:6px;width:65%;">Candidate Name</th></tr></thead><tbody>' +
         (members.length ? members.map((m, idx) => '<tr><td style="border:1px solid #E9EAED;padding:6px;text-align:center;">' + (idx + 1) + '</td><td style="border:1px solid #E9EAED;padding:6px;font-weight:700;">' + m.regNo + '</td><td style="border:1px solid #E9EAED;padding:6px;">' + m.name + '</td></tr>').join('') : '<tr><td colspan="3" style="border:1px solid #E9EAED;padding:6px;text-align:center;color:#94a3b8;">No candidates</td></tr>') + '</tbody></table>';
@@ -348,9 +348,9 @@ function renderResultsAdminTable() {
   var html = '<table><thead><tr><th>Participant</th><th>Category</th><th>Item</th><th>Mark</th><th>Rank</th><th>Status</th><th>Poster</th><th>Action</th></tr></thead><tbody>';
   html += festResults.map(r => {
     var isPub = (r.published === 'YES' || r.published === undefined);
-    var st = isPub ? '<span class="badge" style="background:#d1fae5;color:#047857;">PUBLISHED</span>' : '<span class="badge" style="background:#FEF2F2;color:#F34B4B;">DRAFT</span>';
+    var st = isPub ? '<span class="badge" style="background:#d1fae5;color:#047857;">PUBLISHED</span>' : '<span class="badge" style="background:#EBF3FC;color:#185ABD;">DRAFT</span>';
     return '<tr><td><b>' + esc(r.name) + '</b> <span class="badge team-badge-' + String(r.team).toLowerCase() + '">' + esc(r.team) + '</span></td>' +
-      '<td>' + esc(r.category) + '</td><td>' + esc(r.program) + '</td><td style="font-weight:800;">' + r.mark + '</td><td style="font-weight:700;color:#F34B4B;">' + esc(r.place) + '</td>' +
+      '<td>' + esc(r.category) + '</td><td>' + esc(r.program) + '</td><td style="font-weight:800;">' + r.mark + '</td><td style="font-weight:700;color:#185ABD;">' + esc(r.place) + '</td>' +
       '<td>' + st + '</td><td><button onclick="openPosterStudioWithData('' + encodeURIComponent(r.name) + '','' + encodeURIComponent(r.team) + '','' + encodeURIComponent(r.category) + '','' + encodeURIComponent(r.program) + '','' + encodeURIComponent(r.place || 'WINNER') + '')" class="btn-outline-sm"><i class="fa-solid fa-wand-magic-sparkles"></i> Poster</button></td>' +
       '<td><button onclick="deleteResult(' + r.id + ')" class="btn-danger-sm"><i class="fa-solid fa-trash"></i></button></td></tr>';
   }).join('');
@@ -402,7 +402,7 @@ function buildPointTables() {
   if (leaderEl) leaderEl.textContent = sortedTeams[0] && sortedTeams[0].score > 0 ? sortedTeams[0].team : '—';
 
   var overallHtml = '<table><thead><tr><th>Rank</th><th>Team</th><th>Total Score</th></tr></thead><tbody>' +
-    sortedTeams.map((s, idx) => '<tr><td><b>#' + (idx + 1) + '</b></td><td><span class="badge team-badge-' + s.team.toLowerCase() + '">' + s.team + '</span></td><td style="font-weight:800;color:#F34B4B;">' + s.score + ' pts</td></tr>').join('') + '</tbody></table>';
+    sortedTeams.map((s, idx) => '<tr><td><b>#' + (idx + 1) + '</b></td><td><span class="badge team-badge-' + s.team.toLowerCase() + '">' + s.team + '</span></td><td style="font-weight:800;color:#185ABD;">' + s.score + ' pts</td></tr>').join('') + '</tbody></table>';
 
   document.getElementById('teamPointsTable').innerHTML = overallHtml;
   document.getElementById('adminPointTablePreview').innerHTML = overallHtml;
@@ -507,5 +507,5 @@ function filterStudents() {
   var container = document.getElementById('teamMembersTable'); if (!container) return;
   if (!list.length) { container.innerHTML = "<p class='muted-text' style='padding:12px;'>No matching candidates found.</p>"; return; }
   container.innerHTML = '<table><thead><tr><th>Reg No</th><th>Name</th><th>Category</th><th>Team</th></tr></thead><tbody>' +
-    list.map(m => '<tr><td><b style="color:#F34B4B;">' + esc(m.regNo) + '</b></td><td>' + esc(m.name) + '</td><td>' + esc(m.category) + '</td><td><span class="badge team-badge-' + m.team.toLowerCase() + '">' + esc(m.team) + '</span></td></tr>').join('') + '</tbody></table>';
+    list.map(m => '<tr><td><b style="color:#185ABD;">' + esc(m.regNo) + '</b></td><td>' + esc(m.name) + '</td><td>' + esc(m.category) + '</td><td><span class="badge team-badge-' + m.team.toLowerCase() + '">' + esc(m.team) + '</span></td></tr>').join('') + '</tbody></table>';
 }

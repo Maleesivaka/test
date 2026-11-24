@@ -84,13 +84,13 @@ function printEntryFormPDF() {
   var win = window.open('', '_blank');
   win.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Entry Form - MMO Arts Fest 2k26</title>' +
     '<style>@page{size:A4 landscape;margin:8mm}*{box-sizing:border-box;font-family:"Segoe UI",Tahoma,sans-serif}body{margin:0;color:#0f172a;-webkit-print-color-adjust:exact;print-color-adjust:exact}' +
-    '.page{page-break-after:always;border:2px solid #D97706;border-radius:6px;padding:6mm;min-height:190mm}.hdr{text-align:center;border-bottom:2px solid #FDB827;padding-bottom:4px;margin-bottom:6px}' +
-    '.badge{display:inline-block;color:#fff;font-size:10px;font-weight:700;padding:2px 12px;border-radius:10px;margin-top:3px}.meta{display:flex;justify-content:space-between;background:#fff8e6;border:1px solid #f0d27a;padding:5px 10px;font-size:12px;margin-bottom:5px}' +
-    '.rules{font-size:10.5px;background:#fff8e1;border-left:4px solid #FDB827;padding:5px 8px;margin-bottom:6px}table{width:100%;border-collapse:collapse;table-layout:fixed}' +
-    'th,td{border:1px solid #64748b;padding:2px 3px;font-size:11px;height:8.5mm}th{background:#14110b;color:#ffe9a8;font-size:10px}th.grp{background:#D97706;font-size:9px}' +
-    'th.vt{height:30mm;padding:2px;background:#fff3d1;color:#14110b}th.vt div{writing-mode:vertical-rl;transform:rotate(180deg);margin:0 auto;font-size:10px;max-height:28mm;overflow:hidden}' +
+    '.page{page-break-after:always;border:2px solid #185ABD;border-radius:6px;padding:6mm;min-height:190mm}.hdr{text-align:center;border-bottom:2px solid #2B7CD3;padding-bottom:4px;margin-bottom:6px}' +
+    '.badge{display:inline-block;color:#fff;font-size:10px;font-weight:700;padding:2px 12px;border-radius:10px;margin-top:3px}.meta{display:flex;justify-content:space-between;background:#F3F4F6;border:1px solid #f0d27a;padding:5px 10px;font-size:12px;margin-bottom:5px}' +
+    '.rules{font-size:10.5px;background:#fff8e1;border-left:4px solid #2B7CD3;padding:5px 8px;margin-bottom:6px}table{width:100%;border-collapse:collapse;table-layout:fixed}' +
+    'th,td{border:1px solid #64748b;padding:2px 3px;font-size:11px;height:8.5mm}th{background:#14110b;color:#ffe9a8;font-size:10px}th.grp{background:#185ABD;font-size:9px}' +
+    'th.vt{height:30mm;padding:2px;background:#EBF3FC;color:#14110b}th.vt div{writing-mode:vertical-rl;transform:rotate(180deg);margin:0 auto;font-size:10px;max-height:28mm;overflow:hidden}' +
     'td.c{text-align:center}td.reg{font-weight:700;font-size:10px}td.nm{font-size:11px}.box{display:inline-block;width:5mm;height:5mm;border:1.5px solid #0f172a;border-radius:1px;vertical-align:middle}' +
-    'tr.cnt td{background:#fff8e6}td.lim{background:#fff8e1}.sign{display:flex;justify-content:space-between;margin-top:14px;font-size:11.5px;font-weight:700;color:#D97706}</style>' +
+    'tr.cnt td{background:#F3F4F6}td.lim{background:#fff8e1}.sign{display:flex;justify-content:space-between;margin-top:14px;font-size:11.5px;font-weight:700;color:#185ABD}</style>' +
     '</head><body>' + pages + '<script>window.print();<\/script></body></html>');
   win.document.close();
 }

@@ -32,7 +32,7 @@
 #admSchedule { border-left: 3px solid #059669; }
 #admJudges { border-left: 3px solid #7c3aed; }
 #admResults { border-left: 3px solid var(--coral); }
-#admAnnouncements { border-left: 3px solid #d97706; }
+#admAnnouncements { border-left: 3px solid #185ABD; }
 #admPoints { border-left: 3px solid var(--charcoal); }
 
 .rot-controls { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }

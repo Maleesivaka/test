@@ -6,11 +6,11 @@ var posterPhoto = null, posterBg = null, posterLogo = { name: null, sub: null };
 })();
 var P_TEAM = { Qahira: '#0ea5e9', Qudsiya: '#10b981', Qurthuba: '#ef4444' };
 var P_THEMES = {
-  1: { bg: ['#09090b', '#18181b', '#050507'], acc: '#FDB827', glow: '#F97316' },
+  1: { bg: ['#09090b', '#18181b', '#050507'], acc: '#2B7CD3', glow: '#F97316' },
   2: { bg: ['#1c0a00', '#7c2d12', '#09090b'], acc: '#fde047', glow: '#F97316' },
-  3: { bg: ['#140a24', '#3b0764', '#09090b'], acc: '#FDB827', glow: '#a855f7' },
-  4: { bg: ['#041524', '#0c4a6e', '#09090b'], acc: '#FDB827', glow: '#0ea5e9' },
-  5: { bg: ['#0f0d08', '#422006', '#09090b'], acc: '#fde68a', glow: '#FDB827' }
+  3: { bg: ['#140a24', '#3b0764', '#09090b'], acc: '#2B7CD3', glow: '#a855f7' },
+  4: { bg: ['#041524', '#0c4a6e', '#09090b'], acc: '#2B7CD3', glow: '#0ea5e9' },
+  5: { bg: ['#0f0d08', '#422006', '#09090b'], acc: '#fde68a', glow: '#2B7CD3' }
 };
 function pv(id, def) { var e = document.getElementById(id); return (e && e.value !== '') ? e.value : def; }
 function readImg(file, cb) { var r = new FileReader(); r.onload = function () { var i = new Image(); i.onload = function () { cb(i); }; i.src = r.result; }; r.readAsDataURL(file); }
@@ -40,7 +40,7 @@ function fitFont(ctx, text, maxW, size, weight, family, min) {
 }
 function drawPhoto(ctx, w, h, th, name) {
   var cx = w * pv('pmPhotoX', 50) / 100, cy = h * pv('pmPhotoY', 40) / 100, r = Number(pv('pmPhotoSize', 190));
-  var shape = pv('pmShape', 'circle'), acc = th ? th.acc : '#FDB827';
+  var shape = pv('pmShape', 'circle'), acc = th ? th.acc : '#2B7CD3';
   var path = function (g) { g.beginPath(); if (shape === 'circle') g.arc(cx, cy, r, 0, Math.PI * 2); else g.roundRect(cx - r, cy - r, r * 2, r * 2, shape === 'rounded' ? r * 0.28 : 6); };
   ctx.save(); path(ctx); ctx.fillStyle = '#09090b'; ctx.fill(); ctx.restore();
   ctx.save(); path(ctx); ctx.clip();

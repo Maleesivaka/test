@@ -42,16 +42,16 @@ updateResultCandidateDropdown = function () {
   }
   if (!rbRows.length) { box.innerHTML = "<p class='muted-text' style='padding:14px;'>No participants found.</p>"; return; }
   var opts = function (list, cur) { return list.map(function (v) { return '<option value="' + v + '"' + (cur === v ? ' selected' : '') + '>' + (v === '-' ? '—' : v) + '</option>'; }).join(''); };
-  var h = (note ? '<p style="font-size:12px;color:#F97316;padding:8px 12px;">' + note + '</p>' : '') +
+  var h = (note ? '<p style="font-size:12px;color:#185ABD;padding:8px 12px;">' + note + '</p>' : '') +
     '<table><thead><tr><th>#</th><th>Reg No</th><th>Participant</th><th>Team</th><th>Rank</th><th>Grade</th><th>Mark</th></tr></thead><tbody>';
   rbRows.forEach(function (r, i) {
     var ex = festResults.filter(function (x) { return x.program === item && x.category === cat && (cat === 'GENERAL' ? x.team === r.team : String(x.regNo) === String(r.regNo)); })[0] || {};
     var rank = (ex.place && ex.place !== '-') ? ex.place : '-', grade = (ex.grade && ex.grade !== '-') ? ex.grade : '-';
-    h += '<tr><td>' + (i + 1) + '</td><td><b style="color:#FDB827;">' + (r.regNo === 'TEAM' ? '–' : esc(r.regNo)) + '</b></td><td>' + esc(r.name) + '</td>' +
+    h += '<tr><td>' + (i + 1) + '</td><td><b style="color:#185ABD;">' + (r.regNo === 'TEAM' ? '–' : esc(r.regNo)) + '</b></td><td>' + esc(r.name) + '</td>' +
       '<td><span class="badge team-badge-' + r.team.toLowerCase() + '">' + r.team + '</span></td>' +
       '<td><select id="rbRank' + i + '" onchange="rbRecalc(' + i + ')" style="margin:0;padding:5px 8px;">' + opts(['-', '1st', '2nd', '3rd'], rank) + '</select></td>' +
       '<td><select id="rbGrade' + i + '" onchange="rbRecalc(' + i + ')" style="margin:0;padding:5px 8px;">' + opts(['-', 'A', 'B', 'C'], grade) + '</select></td>' +
-      '<td id="rbMark' + i + '" style="font-weight:800;color:#F97316;font-size:15px;">' + rbMark(rank, grade) + '</td></tr>';
+      '<td id="rbMark' + i + '" style="font-weight:800;color:#185ABD;font-size:15px;">' + rbMark(rank, grade) + '</td></tr>';
   });
   box.innerHTML = h + '</tbody></table>';
 };

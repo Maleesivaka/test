@@ -14,7 +14,7 @@ function scheduleHtml(cat) {
       out += '<h3 style="margin:14px 0 6px;">' + fmtDate(s.date) + '</h3><div class="table-responsive"><table><thead><tr><th style="width:22%">Time</th><th>Program</th><th style="width:16%">Category</th><th style="width:20%">Venue</th></tr></thead><tbody>';
       last = s.date;
     }
-    out += '<tr><td><b style="color:#F97316;">' + fmtTime(s.time) + (s.endTime ? ' – ' + fmtTime(s.endTime) : '') + '</b></td><td><b>' + esc(s.program) + '</b>' + (s.note ? '<br><small class="muted-text">' + esc(s.note) + '</small>' : '') + '</td><td>' + esc(s.category) + '</td><td>' + esc(s.venue || '') + '</td></tr>';
+    out += '<tr><td><b style="color:#185ABD;">' + fmtTime(s.time) + (s.endTime ? ' – ' + fmtTime(s.endTime) : '') + '</b></td><td><b>' + esc(s.program) + '</b>' + (s.note ? '<br><small class="muted-text">' + esc(s.note) + '</small>' : '') + '</td><td>' + esc(s.category) + '</td><td>' + esc(s.venue || '') + '</td></tr>';
   });
   return out + '</tbody></table></div>';
 }

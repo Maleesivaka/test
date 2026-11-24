@@ -62,7 +62,7 @@ function renderProgramsTable() {
   festPrograms.forEach(function (p) {
     var k = progKey(p);
     h += '<tr><td><b>' + esc(p.type) + '</b></td><td><span class="badge" style="background:#F3F4F6;color:#202124;">' + esc(p.category) + '</span></td>' +
-      '<td><b>' + esc(p.name) + '</b></td><td style="font-weight:700;color:#F34B4B;">' + maxText(p) + '</td><td>' + totalEntered(k) + '</td>' +
+      '<td><b>' + esc(p.name) + '</b></td><td style="font-weight:700;color:#185ABD;">' + maxText(p) + '</td><td>' + totalEntered(k) + '</td>' +
       '<td style="white-space:nowrap;"><button onclick="editProgram('' + enc(k) + '')" class="btn-outline-sm" style="margin-right:4px;"><i class="fa-solid fa-pen"></i> Edit</button>' +
       '<button onclick="deleteProgramByKey('' + enc(k) + '')" class="btn-danger-sm"><i class="fa-solid fa-trash"></i></button></td></tr>';
   });
@@ -102,7 +102,7 @@ function renderCandidatesTable() {
   var h = '<table><thead><tr><th>Reg No</th><th>Candidate Name</th><th>Category</th><th>Team</th><th>Entries</th><th>Action</th></tr></thead><tbody>';
   festCandidates.forEach(function (c) {
     var keys = candProgCount(c);
-    h += '<tr><td><b style="color:#F34B4B;">' + esc(c.regNo) + '</b></td><td>' + esc(c.name) + '</td><td>' + esc(c.category) + '</td>' +
+    h += '<tr><td><b style="color:#185ABD;">' + esc(c.regNo) + '</b></td><td>' + esc(c.name) + '</td><td>' + esc(c.category) + '</td>' +
       '<td><span class="badge team-badge-' + String(c.team).toLowerCase() + '">' + esc(c.team) + '</span></td>' +
       '<td><span class="badge" style="background:#F3F4F6;color:#202124;">' + keys.length + ' item(s)</span></td>' +
       '<td style="white-space:nowrap;"><button onclick="editCandidate('' + enc(c.regNo) + '')" class="btn-outline-sm" style="margin-right:4px;"><i class="fa-solid fa-pen"></i> Edit</button>' +
@@ -132,7 +132,7 @@ function renderEntriesTab() {
   var cands = festCandidates.filter(function (c) { return c.team === team && c.category === cat; });
   var progs = programsForCategory(cat);
   var st = document.getElementById('entStatus');
-  if (st) st.innerHTML = entriesDirty ? '<span style="color:#F34B4B;font-weight:700;">● Unsaved changes</span>' : '<span style="color:#047857;font-size:12px;">All entries saved</span>';
+  if (st) st.innerHTML = entriesDirty ? '<span style="color:#185ABD;font-weight:700;">● Unsaved changes</span>' : '<span style="color:#047857;font-size:12px;">All entries saved</span>';
 
   if (!cands.length) { box.innerHTML = "<p class='muted-text' style='padding:14px;text-align:center;'>No candidates in " + team + " (" + cat + ").</p>"; return; }
   if (!progs.length) { box.innerHTML = "<p class='muted-text' style='padding:14px;text-align:center;'>No programs in " + cat + ".</p>"; return; }
@@ -141,16 +141,16 @@ function renderEntriesTab() {
   progs.forEach(function (p) {
     var k = progKey(p), m = progMax(p), n = teamCount(team, k), full = m > 0 && n >= m;
     h += '<th style="min-width:94px;white-space:normal;font-size:11px;">' + esc(p.name) + '<br><span style="font-weight:500;">' + esc(p.type) + '</span><br>' +
-      '<span class="badge" style="background:' + (full ? '#fee2e2;color:#b91c1c' : '#FEF2F2;color:#F34B4B') + ';">' + n + ' / ' + maxText(p) + '</span></th>';
+      '<span class="badge" style="background:' + (full ? '#fee2e2;color:#b91c1c' : '#EBF3FC;color:#185ABD') + ';">' + n + ' / ' + maxText(p) + '</span></th>';
   });
   h += '<th>Total</th></tr></thead><tbody>';
   cands.forEach(function (c, i) {
-    h += '<tr><td>' + (i + 1) + '</td><td class="sticky-col"><b>' + esc(c.name) + '</b></td><td><code style="color:#F34B4B;">' + esc(c.regNo) + '</code></td>';
+    h += '<tr><td>' + (i + 1) + '</td><td class="sticky-col"><b>' + esc(c.name) + '</b></td><td><code style="color:#185ABD;">' + esc(c.regNo) + '</code></td>';
     progs.forEach(function (p) {
       var k = progKey(p), on = (c.entries || []).indexOf(k) >= 0, m = progMax(p), blocked = !on && m > 0 && teamCount(team, k) >= m;
       h += '<td><input type="checkbox" class="ent-cb" ' + (on ? 'checked ' : '') + (blocked ? 'disabled ' : '') + 'onchange="toggleEntry('' + enc(c.regNo) + '','' + enc(k) + '',this)"></td>';
     });
-    h += '<td style="font-weight:800;color:#F34B4B;">' + candProgCount(c).length + '</td></tr>';
+    h += '<td style="font-weight:800;color:#185ABD;">' + candProgCount(c).length + '</td></tr>';
   });
   box.innerHTML = h + '</tbody></table>';
 }

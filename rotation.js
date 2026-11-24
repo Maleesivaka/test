@@ -1,6 +1,6 @@
 var ROT_TEAMS = ["Qahira", "Qudsiya", "Qurthuba"];
 var ROT_CATS = ["SENIOR", "JUNIOR", "SUB-JUNIOR", "GENERAL"];
-var ROT_COL = { Qahira: "#0ea5e9", Qudsiya: "#10b981", Qurthuba: "#ef4444" };
+var ROT_COL = { Qahira: "#0284c7", Qudsiya: "#059669", Qurthuba: "#185ABD" };
 var rotIndex = 0, rotSeconds = 15, rotLeft = 15, rotPaused = false, rotTimer = null;
 
 function rotSlides() {
@@ -20,12 +20,12 @@ function rotRank(team, cat) {
 }
 function rotBanner(team, cat) {
   var col = ROT_COL[team], nice = cat === 'GENERAL' ? 'GENERAL / GROUP ITEMS' : cat;
-  return '<div style="background:linear-gradient(135deg,' + col + '33,#121318);border:1px solid ' + col + ';color:#fff;border-radius:12px;padding:14px 18px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">' +
-    '<div><span style="font-size:10px;letter-spacing:2px;color:#FDB827;font-weight:700;">TEAM STANDINGS</span>' +
-    '<div style="font-family:Cinzel,serif;font-size:24px;font-weight:800;letter-spacing:1.5px;">' + team.toUpperCase() + ' <span style="font-size:13px;color:#F97316;">• ' + nice + '</span></div></div>' +
+  return '<div style="background:#F3F4F6;border:1px solid #E9EAED;border-left:5px solid ' + col + ';color:#202124;border-radius:12px;padding:14px 18px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">' +
+    '<div><span style="font-size:10.5px;letter-spacing:1.5px;color:#4B5565;font-weight:700;">TEAM STANDINGS</span>' +
+    '<div style="font-size:22px;font-weight:800;color:#202124;">' + team.toUpperCase() + ' <span style="font-size:13px;color:#185ABD;">• ' + nice + '</span></div></div>' +
     '<div style="display:flex;gap:20px;text-align:center;">' +
-    '<div><div style="font-size:10px;color:#94a3b8;">RANK</div><div style="font-size:24px;font-weight:800;color:#FDB827;">#' + rotRank(team, cat) + '</div></div>' +
-    '<div><div style="font-size:10px;color:#94a3b8;">POINTS</div><div style="font-size:24px;font-weight:800;color:#F97316;">' + rotTotal(team, cat) + '</div></div></div></div>';
+    '<div><div style="font-size:10px;color:#4B5565;font-weight:700;">RANK</div><div style="font-size:22px;font-weight:800;color:#202124;">#' + rotRank(team, cat) + '</div></div>' +
+    '<div><div style="font-size:10px;color:#4B5565;font-weight:700;">POINTS</div><div style="font-size:22px;font-weight:800;color:#185ABD;">' + rotTotal(team, cat) + '</div></div></div></div>';
 }
 function rotBuild(s) {
   var team = s.team, cat = s.cat, out = rotBanner(team, cat);
@@ -34,7 +34,7 @@ function rotBuild(s) {
     var rows = festResults.filter(function (r) { return r.team === team && r.category === 'GENERAL' && shown(r); });
     if (!rows.length) return out + '<p class="rot-empty">No general / group results published for this team yet.</p>';
     return out + '<div class="table-responsive rot-wrap"><table><thead><tr><th>Item</th><th>Mark</th><th>Place</th></tr></thead><tbody>' +
-      rows.map(function (r) { return '<tr><td><b>' + esc(r.program) + '</b></td><td style="font-weight:800;color:#FDB827;">' + r.mark + '</td><td style="color:#F97316;font-weight:700;">' + (r.place && r.place !== '-' ? esc(r.place) : '') + '</td></tr>'; }).join('') + '</tbody></table></div>';
+      rows.map(function (r) { return '<tr><td><b>' + esc(r.program) + '</b></td><td style="font-weight:800;color:#202124;">' + r.mark + '</td><td style="color:#185ABD;font-weight:700;">' + (r.place && r.place !== '-' ? esc(r.place) : '') + '</td></tr>'; }).join('') + '</tbody></table></div>';
   }
   var cands = festCandidates.filter(function (c) { return c.team === team && c.category === cat; });
   var catResults = festResults.filter(function (r) { return r.category === cat && shown(r); });
@@ -49,19 +49,19 @@ function rotBuild(s) {
   var data = cands.map(function (c) {
     var total = 0, cells = progs.map(function (p) {
       var r = map[String(c.regNo).trim().toUpperCase() + '|' + p.trim().toUpperCase()];
-      if (!r) return '<td style="color:#475569;">–</td>';
+      if (!r) return '<td style="color:#94a3b8;">–</td>';
       total += Number(r.mark || 0);
       var pl = (r.place && r.place !== '-') ? '<span class="rot-pl">' + esc(r.place) + '</span>' : '';
-      return '<td style="font-weight:700;color:#FDB827;">' + r.mark + pl + '</td>';
+      return '<td style="font-weight:700;color:#202124;">' + r.mark + pl + '</td>';
     }).join('');
     return { c: c, cells: cells, total: total };
   }).sort(function (a, b) { return b.total - a.total || a.c.name.localeCompare(b.c.name); });
 
   var html = '<div class="table-responsive rot-wrap"><table class="matrix-table"><thead><tr><th>#</th><th class="sticky-col">Student</th><th>Reg No</th>' +
-    progs.map(function (p) { return '<th style="min-width:90px;font-size:10.5px;">' + esc(p) + '</th>'; }).join('') + '<th style="color:#F97316;">Total</th></tr></thead><tbody>';
+    progs.map(function (p) { return '<th style="min-width:90px;font-size:10.5px;">' + esc(p) + '</th>'; }).join('') + '<th style="color:#185ABD;">Total</th></tr></thead><tbody>';
   data.forEach(function (d, i) {
-    html += '<tr><td>' + (i + 1) + '</td><td class="sticky-col"><b>' + esc(d.c.name) + '</b></td><td><code style="color:#FDB827;">' + esc(d.c.regNo) + '</code></td>' +
-      d.cells + '<td style="font-weight:800;color:#F97316;">' + d.total + '</td></tr>';
+    html += '<tr><td>' + (i + 1) + '</td><td class="sticky-col"><b>' + esc(d.c.name) + '</b></td><td><code style="color:#185ABD;font-weight:700;">' + esc(d.c.regNo) + '</code></td>' +
+      d.cells + '<td style="font-weight:800;color:#185ABD;">' + d.total + '</td></tr>';
   });
   return out + html + '</tbody></table></div>';
 }
